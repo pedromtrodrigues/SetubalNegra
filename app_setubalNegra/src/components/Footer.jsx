@@ -52,9 +52,7 @@ const Footer = ({ t, sections }) => {
                                 ))
                             }
                             
-                            <button className="mt-10 w-fit bg-white text-black px-10 py-3 rounded-full text-sm font-medium shadow-sm hover:shadow-md transition mx-0">
-                                {t('download_flyer')}
-                            </button>
+                            
                         </nav>
                     </div>
 

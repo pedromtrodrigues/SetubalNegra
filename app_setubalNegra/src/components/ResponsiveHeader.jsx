@@ -60,9 +60,6 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
               <a onClick={() => handleNavigation('sobre-nos')} className="cursor-pointer font-medium hover:opacity-60 transition">Sobre nós</a>
               <a onClick={() => handleNavigation('contactos')} className="cursor-pointer font-medium hover:opacity-60 transition">Contactos</a>
               
-              <button className="bg-white px-6 py-2 rounded-full shadow-sm hover:shadow-md transition font-medium text-sm">
-                Download Flyer
-              </button>
 
               <div className="relative">
                 <button 
@@ -73,7 +70,7 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
                   <ChevronDown size={16} className={isLangOpen ? 'rotate-180' : ''} />
                 </button>
                 {isLangOpen && (
-                  <div className="absolute right-0 mt-2 bg-white/90 backdrop-blur-lg rounded-md shadow-lg overflow-hidden border border-black/5">
+                  <div className="absolute right-0 mt-2 bg-white rounded-md z-[110]">
                     {['PT', 'EN'].map((lang) => (
                       <button
                         key={lang}
@@ -136,14 +133,7 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
                 </div>
               ))}
 
-              <div className="pt-5">
-                <button
-                  className="bg-white px-8 py-1 rounded-full"
-                  onClick={() => alert("Download flyer")}
-                >
-                  {t('download_flyer')}
-                </button>
-              </div>
+              
             </nav>
 
             <div className="mt-auto p-8">
@@ -165,13 +155,13 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
                 <div className="flex items-center space-x-3">
                   {/* Imagem de Setúbal */}
                   <img 
-                    src="/assets/setubal.png" 
+                    src="./assets/setubal.png" 
                     alt="Setubal" 
                     className="h-[100px] w-auto object-contain" 
                   />
                   {/* Imagem do IPS - ligeiramente menor na altura para equilibrar o peso visual */}
                   <img 
-                    src="/assets/ips.png" 
+                    src="./assets/ips.png" 
                     alt="IPS" 
                     className="h-[90px] w-auto object-contain" 
                   />

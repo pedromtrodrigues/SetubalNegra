@@ -6,93 +6,93 @@ import ResponsiveHeader from './ResponsiveHeader';
 const monumentos = [
   {
     id: 1,
-    nome: "Casa da Alfândega",
-    subtitulo: "Biblioteca Municipal",
-    audioUrl: "/assets/ponto_1_final.mp3",
+    nomeKey: "poi_1_name",
+    subKey: "poi_1_sub",
+    infoKey: "poi_1_info",
+    audioPath: "./assets/ponto_1",
     pos: { lat: 38.52345866090092, lng: -8.889270953156442 },
-    horario: "Seg-Sex: 09:00-19:00 | Sáb: 14:00-19:00 | Dom: 08:30-12:00",
-    img: "/assets/alfandega.jpg",
-    info: "Setúbal e o tráfico Transatlântico de pessoas escravizadas."
+    horarioKey: "horario_1",
+    img: "./assets/alfandega.jpg",
   },
   {
     id: 2,
-    nome: "Igreja de Santa Maria da Graça",
-    subtitulo: "Sé de Setúbal",
-    audioUrl: "/assets/ponto_2_final.mp3",
+    nomeKey: "poi_2_name",
+    subKey: "poi_2_sub",
+    infoKey: "poi_2_info",
+    audioPath: "./assets/ponto_2",
     pos: { lat: 38.52460000637646, lng: -8.88756996719753 },
-    horario: "Ter, Qui, Sex: 20:00-22:30 | Qua: 03:00-17:00 | Dom: 10:00-22:00",
-    img: "/assets/se_setubal.png",
-    info: "Marco religioso central na história da cidade."
+    horarioKey: "horario_2",
+    img: "./assets/se_setubal.png",
   },
   {
     id: 3,
-    nome: "Casa do Corpo Santo",
-    subtitulo: "Museu do Barroco",
-    audioUrl: "/assets/ponto_3_final.mp3",
+    nomeKey: "poi_3_name",
+    subKey: "poi_3_sub",
+    infoKey: "poi_3_info",
+    audioPath: "./assets/ponto_3",
     pos: { lat: 38.524650, lng: -8.887600 },
-    horario: "Ter-Sex: 09:00-12:30 e 14:00-17:30 | Sáb: 14:00-18:00",
-    img: "/assets/corpo_santo.png",
-    info: "Antiga sede da confraria dos navegadores e mareantes."
+    horarioKey: "horario_3",
+    img: "./assets/corpo_santo.png",
   },
   {
     id: 4,
-    nome: "Convento de Jesus",
-    subtitulo: "Museu de Setúbal",
-    audioUrl: "/assets/ponto_4_final.mp3",
+    nomeKey: "poi_4_name",
+    subKey: "poi_4_sub",
+    infoKey: "poi_4_info",
+    audioPath: "./assets/ponto_4",
     pos: { lat: 38.52596911747808, lng: -8.894628824349434 },
-    horario: "Ter-Sáb: 09:00-12:30 e 14:00-18:00",
-    img: "/assets/convento_jesus.png",
-    info: "Exemplo maior do estilo manuelino em Setúbal."
+    horarioKey: "horario_4",
+    img: "./assets/convento_jesus.png",
   },
   {
     id: 5,
-    nome: "Igreja da Anunciada",
-    subtitulo: "Busto de São Benedito",
-    audioUrl: "/assets/ponto_5_final.mp3",
+    nomeKey: "poi_5_name",
+    subKey: "poi_5_sub",
+    infoKey: "poi_5_info",
+    audioPath: "./assets/ponto_5",
     pos: { lat: 38.52245170505707, lng: -8.900317382629833 },
-    horario: "Horário sob consulta local",
-    img: "/assets/anunciada.png",
-    info: "Ligação profunda à comunidade piscatória e devoção negra."
+    horarioKey: "horario_5",
+    img: "./assets/anunciada.png",
   },
   {
     id: 6,
-    nome: "Praça de Bocage",
-    subtitulo: "Antigo Largo das Couves",
-    audioUrl: "/assets/ponto_6_final.mp3",
+    nomeKey: "poi_6_name",
+    subKey: "poi_6_sub",
+    infoKey: "poi_6_info",
+    audioPath: "./assets/ponto_6",
     pos: { lat: 38.524222912961214, lng: -8.892668681532145 },
-    horario: "Espaço Público (Aberto 24h)",
-    img: "/assets/praca_bocage.png",
-    info: "O coração político e social da vila de Setúbal."
+    horarioKey: "horario_6",
+    img: "./assets/praca_bocage.png",
   },
   {
     id: 7,
-    nome: "Largo da Ribeira Velha",
-    subtitulo: "Antigo Pelourinho",
-    audioUrl: "/assets/ponto_7_final.mp3",
+    nomeKey: "poi_7_name",
+    subKey: "poi_7_sub",
+    infoKey: "poi_7_info",
+    audioPath: "./assets/ponto_7",
     pos: { lat: 38.523596, lng: -8.891891 },
-    horario: "Espaço Público (Aberto 24h)",
-    img: "/assets/ribeira_velha.png",
-    info: "Centro do comércio marítimo e local de justiça."
+    horarioKey: "horario_7",
+    img: "./assets/ribeira_velha.png",
   },
   {
     id: 8,
-    nome: "Galeria do Banco de Portugal",
-    subtitulo: "Espaço Cultural",
-    audioUrl: "/assets/ponto_8_final.mp3",
+    nomeKey: "poi_8_name",
+    subKey: "poi_8_sub",
+    infoKey: "poi_8_info",
+    audioPath: "./assets/ponto_8",
     pos: { lat: 38.5238, lng: -8.8935 },
-    horario: "Ter-Sáb: 11:00-14:00 e 15:00-18:00 | Dom: 14:00-18:00",
-    img: "/assets/banco_portugal.png",
-    info: "Edifício histórico recuperado para fins artísticos."
+    horarioKey: "horario_8",
+    img: "./assets/banco_portugal.png",
   },
   {
     id: 9,
-    nome: "Pelourinho de Setúbal",
-    subtitulo: "Praça Marquês de Pombal",
-    audioUrl: "/assets/ponto_9_final.mp3",
+    nomeKey: "poi_9_name",
+    subKey: "poi_9_sub",
+    infoKey: "poi_9_info",
+    audioPath: "./assets/ponto_9",
     pos: { lat: 38.5241, lng: -8.8890 },
-    horario: "Espaço Público",
-    img: "/assets/pelourinho.png",
-    info: "Símbolo da autoridade municipal."
+    horarioKey: "horario_9",
+    img: "./assets/pelourinho.png",
   }
 ];
 
@@ -136,7 +136,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  // LOGICA ACRESCENTADA: Lembrar o último ponto visitado para a navegação não resetar
   const [ultimoPontoVisitado, setUltimoPontoVisitado] = useState(monumentos[0]);
   const [userLocation, setUserLocation] = useState({ lat: 38.5244, lng: -8.8926 });
   const [activeRoute, setActiveRoute] = useState(false);
@@ -170,7 +169,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
       audioRef.current.load();
     }
     
-    // Atualiza o último visitado quando selecionas um novo monumento
     if (selectedPoi) {
         setUltimoPontoVisitado(selectedPoi);
     }
@@ -232,7 +230,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
             >
               {monumentos.map((m) => (
                 <AdvancedMarker key={m.id} position={m.pos} onClick={() => { setSelectedPoi(m); setActiveRoute(false); }}>
-                  <div className="w-10 h-10 bg-white border border-black rounded-full flex items-center justify-center shadow-xl cursor-pointer text-black font-bold">
+                  <div className="w-10 h-10 bg-white border border-black rounded-full flex items-center justify-center cursor-pointer text-black">
                     {m.id}
                   </div>
                 </AdvancedMarker>
@@ -244,7 +242,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
               )}
               <Directions 
                 userLocation={userLocation} 
-                // LOGICA ACRESCENTADA: Usa o último visitado como destino se nenhum estiver aberto
                 destination={selectedPoi ? selectedPoi.pos : ultimoPontoVisitado.pos} 
                 activeRoute={activeRoute} 
               />
@@ -258,17 +255,17 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
       {!selectedPoi && (
         <div className="absolute inset-x-0 bottom-10 flex flex-row justify-center items-center space-x-3 px-6 z-[50] pointer-events-none">
           <button 
-            onClick={() => setActiveRoute(!activeRoute)} 
-            className={`flex-1 max-w-[200px] py-4 rounded-full font-bold text-[10px] uppercase tracking-wider shadow-2xl transition-all pointer-events-auto ${activeRoute ? 'bg-red-500 text-white' : 'bg-white text-black border border-black'}`}
-          >
-            {/* LOGICA ACRESCENTADA: O ID agora é dinâmico conforme o progresso */}
-            {activeRoute ? " PARAR" : ` PONTO ${ultimoPontoVisitado.id}`}
-          </button>
-          <button 
             onClick={onBack} 
             className="flex-1 max-w-[200px] py-4 bg-white/90 border border-black rounded-full font-bold text-[10px] uppercase tracking-wider text-black shadow-lg pointer-events-auto"
           >
-            VOLTAR
+            {t('voltar')}
+          </button>
+
+          <button 
+            onClick={() => setActiveRoute(!activeRoute)} 
+            className={`flex-1 max-w-[200px] py-4 rounded-full font-bold text-[10px] uppercase tracking-wider shadow-2xl transition-all pointer-events-auto ${activeRoute ? 'bg-red-500 text-white' : 'bg-white text-black border border-black'}`}
+          >
+            {activeRoute ? t('parar') : `${t('ponto')} ${ultimoPontoVisitado.id}`}
           </button>
         </div>
       )}
@@ -278,7 +275,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
           <>
             <audio 
               ref={audioRef} 
-              src={selectedPoi.audioUrl} 
+              src={`${selectedPoi.audioPath}_${activeLang}.mp3`} 
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onEnded={() => setIsPlaying(false)} 
@@ -311,16 +308,16 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
 
               <div className="px-8 pb-32 flex-1 pointer-events-auto overflow-hidden">
                 <div className="mb-2">
-                  <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-2 inline-block font-bold">Ponto {selectedPoi.id}</span>
+                  <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-2 inline-block font-bold">{t('ponto')} {selectedPoi.id}</span>
                   <div className="flex justify-between items-start">
-                    <h2 className="text-xl font-bold text-black leading-tight flex-1">{selectedPoi.nome}</h2>
+                    <h2 className="text-xl font-bold text-black leading-tight flex-1">{t(selectedPoi.nomeKey)}</h2>
                     <button onClick={() => setSelectedPoi(null)} className="ml-4 opacity-20 text-2xl font-bold">×</button>
                   </div>
-                  <p className="text-[13px] opacity-40 text-black font-medium">{selectedPoi.subtitulo}</p>
+                  <p className="text-[13px] opacity-40 text-black font-medium">{t(selectedPoi.subKey)}</p>
                 </div>
 
                 <motion.div style={{ opacity: contentOpacity, scale: contentScale }} className="mt-8">
-                  <p className="text-[15px] leading-relaxed text-black/80 mb-3">{selectedPoi.info}</p>
+                  <p className="text-[15px] leading-relaxed text-black/80 mb-3">{t(selectedPoi.infoKey)}</p>
 
                   <div className="w-full px-2 mb-6">
                     <input 
@@ -339,6 +336,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                       <span>{formatTime(currentTime)}</span>
                       <span>{formatTime(duration)}</span>
                     </div>
+
                     <div className="flex justify-center items-center space-x-10">                
                       <button 
                         onClick={toggleAudio} 
@@ -358,17 +356,17 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                     </div>
                   </div>
 
-                  <img src={selectedPoi.img} className="w-full h-48 object-cover rounded-[30px] shadow-lg mb-4" alt={selectedPoi.nome} />
+                  <img src={selectedPoi.img} className="w-full h-48 object-cover rounded-[30px] shadow-lg mb-4" alt={t(selectedPoi.nomeKey)} />
                   
                   {nextPoi && (
                     <button 
                       onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); }} 
                       className="w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4"
                     >
-                      SEGUIR PARA PONTO {nextPoi.id} 
+                      {t('seguir_para')} {t('ponto')} {nextPoi.id} 
                     </button>
                   )}
-                  <div className="text-black/70 italic text-sm">Horário: {selectedPoi.horario}</div>
+                  <div className="text-black/70 italic text-sm">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
                 </motion.div>
               </div>
             </motion.div>
@@ -378,24 +376,59 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
               className="hidden md:block absolute top-32 right-10 w-[400px] bg-white/40 backdrop-blur-md rounded-[32px] p-8 z-[80] shadow-2xl border border-white/20 pointer-events-auto"
             >
               <button onClick={() => setSelectedPoi(null)} className="absolute top-4 right-6 text-2xl opacity-30 hover:opacity-100 transition-opacity">×</button>
-              <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-4 inline-block font-bold">Ponto {selectedPoi.id}</span>
-              <h2 className="text-2xl font-bold text-black mb-1">{selectedPoi.nome}</h2>
-              <p className="text-xs opacity-60 mb-6 font-medium uppercase tracking-tight">{selectedPoi.subtitulo}</p>
+              <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-4 inline-block font-bold">{t('ponto')} {selectedPoi.id}</span>
+              <h2 className="text-2xl font-bold text-black mb-1">{t(selectedPoi.nomeKey)}</h2>
+              <p className="text-xs opacity-60 mb-6 font-medium uppercase tracking-tight">{t(selectedPoi.subKey)}</p>
               
-              <div className="flex flex-col items-center w-full mb-8">
-                <input type="range" min="0" max={duration} value={currentTime} onChange={(e) => { audioRef.current.currentTime = e.target.value; setCurrentTime(e.target.value); }} className="w-full h-[3px] bg-black/10 rounded-full appearance-none cursor-pointer accent-black mb-4" />
-                <button onClick={toggleAudio} className="w-14 h-14 border border-black rounded-full flex items-center justify-center bg-white shadow-xl hover:scale-110 transition-transform">
-                  {isPlaying ? "⏸" : "▶"}
-                </button>
+              <div className="w-full px-2 mb-6">
+                <input 
+                  type="range" 
+                  min="0" 
+                  max={duration} 
+                  value={currentTime} 
+                  onChange={(e) => {
+                    const time = Number(e.target.value);
+                    audioRef.current.currentTime = time;
+                    setCurrentTime(time);
+                  }} 
+                  className="w-full h-[3px] bg-black/10 rounded-full appearance-none cursor-pointer accent-black" 
+                />
+                <div className="flex justify-between text-[11px] mt-2 font-medium text-black/40">
+                  <span>{formatTime(currentTime)}</span>
+                  <span>{formatTime(duration)}</span>
+                </div>
+
+                <div className="flex justify-center items-center space-x-10">                
+                  <button 
+                    onClick={toggleAudio} 
+                    className="w-10 h-10 border border-black rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform shadow-xl"
+                  >
+                    {isPlaying ? (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="4" width="4" height="16" rx="1" />
+                        <rect x="14" y="4" width="4" height="16" rx="1" />
+                      </svg>
+                    ) : (
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+                        <path d="M5 3l14 9-14 9V3z" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
 
-              <img src={selectedPoi.img} className="w-full h-48 object-cover rounded-2xl mb-4 shadow-md" alt={selectedPoi.nome} />
-              <p className="text-sm text-black/80 leading-relaxed mb-6">{selectedPoi.info}</p>
+              <img src={selectedPoi.img} className="w-full h-48 object-cover rounded-2xl mb-4 shadow-md" alt={t(selectedPoi.nomeKey)} />
+              <p className="text-sm text-black/80 leading-relaxed mb-6">{t(selectedPoi.infoKey)}</p>
               {nextPoi && (
-                <button onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); }} className="w-full py-3 bg-black text-white rounded-full font-bold text-[10px] uppercase tracking-widest shadow-lg">
-                  Próximo: Ponto {nextPoi.id} ➔
-                </button>
+                    <button 
+                      onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); }} 
+                      className="w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4"
+                    >
+                      {t('seguir_para')} {t('ponto')} {nextPoi.id} 
+                    </button>
               )}
+              
+              <div className="text-black/70 italic text-sm">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
             </motion.div>
           </>
         )}

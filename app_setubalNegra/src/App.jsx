@@ -46,10 +46,17 @@ const App = () => {
     scrollToSection(id);
   }, []);
 
-  // SE O MAPA ESTIVER ATIVO, RENDERIZA APENAS O COMPONENTE DO MAPA
-  if (showMap) {
-    return <MapPage onBack={() => setShowMap(false)} t={t} activeLang={activeLang} />;
-  }
+    // SE O MAPA ESTIVER ATIVO, RENDERIZA APENAS O COMPONENTE DO MAPA
+
+ if (showMap) {
+    return (
+        <MapPage 
+        onBack={() => setShowMap(false)} 
+        t={t} 
+        activeLang={activeLang} 
+        handleLangChange={handleLangChange} // ADICIONA ESTA LINHA
+        />);
+ }
 
   return (
     <div className={`min-h-screen font-sans ${BACKGROUND_COLOR}`} id="top"> 
@@ -69,7 +76,7 @@ const App = () => {
           <div className="w-full text-center">
             <div className="">
                 <img 
-                    src="/assets/Principal.png" 
+                    src="./assets/Principal.png" 
                     alt="Pintura Setúbal Negra" 
                     className="w-full h-auto object-cover rounded-md"
                     onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/500x500/A3A3A3/FFFFFF?text=Pintura+Principal"}}
@@ -81,7 +88,7 @@ const App = () => {
                         window.scrollTo(0, 0); // Força o topo
                         setShowMap(true);
                     }}
-                    className="mt-4 px-8 py-3 bg-white text-black text-base font-normal rounded-[20px] shadow-lg transition duration-150 inline-flex justify-center items-center"
+                    className="mt-4 px-8 py-3 bg-white text-black text-base font-normal rounded-[20px]  transition duration-150 inline-flex justify-center items-center"
                 >
                     {t('comecar_visita')} 
                 </button>
@@ -145,7 +152,7 @@ const App = () => {
         </Section>
 
         <img 
-            src="/assets/city.png" 
+            src="./assets/city.png" 
             alt="View" 
             className="w-full h-[363px] object-cover object-center"
         />
