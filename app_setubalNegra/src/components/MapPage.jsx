@@ -189,7 +189,8 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
     }
     setIsPlaying(!isPlaying);
   };
-
+  
+  const ALTURA_REAL_PAINEL = 750;
   const PAINEL_ALTURA_EXPANDIDA = -300;
 
   const handleTimeUpdate = () => {
@@ -301,7 +302,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                 }
                 if (info.offset.y > 150 && !isExpanded) setSelectedPoi(null);
               }}
-              className="md:hidden fixed inset-x-0 bottom-[-550px] h-full bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col touch-none overflow-hidden pointer-events-none"
+              className="md:hidden fixed inset-x-0 bottom-[-750px] h-full bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col touch-none overflow-hidden pointer-events-none"
             >
               <div className="w-full flex justify-center py-5 pointer-events-auto">
                 <div className="w-10 h-1 bg-black/10 rounded-full"></div>
