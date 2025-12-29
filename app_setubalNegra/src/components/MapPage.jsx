@@ -190,6 +190,8 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
     setIsPlaying(!isPlaying);
   };
 
+  const PAINEL_ALTURA_EXPANDIDA = -300;
+
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
   };
@@ -281,25 +283,24 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
               onEnded={() => setIsPlaying(false)} 
             />
 
+
             <motion.div 
               style={{ y: dragY }} 
               drag="y"
-              dragConstraints={{ top: -window.innerHeight + 180, bottom: 0 }}
-              dragElastic={0.05}
+              // 2. Agora o limite é fixo em -600px, não depende mais do innerHeight
+              dragConstraints={{ top: PAINEL_ALTURA_EXPANDIDA, bottom: 0 }}
+              dragElastic={0} // Trava total: não permite puxar nem mais um pixel
               onDragEnd={(e, info) => {
+                // 3. Se soltar após puxar 150px, ele faz o snap para o valor fixo
                 if (info.offset.y < -150 || info.velocity.y < -300) {
                   setIsExpanded(true);
-                  animate(dragY, -window.innerHeight + 180, { type: 'spring', damping: 25, stiffness: 300 });
+                  animate(dragY, PAINEL_ALTURA_EXPANDIDA, { type: 'spring', damping: 25, stiffness: 300 });
                 } else {
                   setIsExpanded(false);
                   animate(dragY, 0, { type: 'spring', damping: 25, stiffness: 300 });
                 }
                 if (info.offset.y > 150 && !isExpanded) setSelectedPoi(null);
               }}
-              initial={{ y: "100%" }}
-              animate={{ y: isExpanded ? -window.innerHeight + 180 : 0 }}
-              exit={{ y: "100%" }}
-              transition={{ type: "spring", damping: 30, stiffness: 300 }}
               className="md:hidden fixed inset-x-0 bottom-[-550px] h-full bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col touch-none overflow-hidden pointer-events-none"
             >
               <div className="w-full flex justify-center py-5 pointer-events-auto">
