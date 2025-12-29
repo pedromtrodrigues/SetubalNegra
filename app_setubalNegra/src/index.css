@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: Inter;
+}
+
+.setubal-style {
+    color: #000;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.negra-style {
+    color: #000;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.text-default {
+  color: #000;
+  /* Já está globalmente Inter e Normal, mas garantimos aqui */
+  font-family: 'Inter', sans-serif; 
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 400; /* Igual a 'normal' */
+  line-height: normal;
+}
+
+:root {
+  --swiper-theme-color: #000000 !important;
+}
+
+
+/* mover a progressbar para baixo do Swiper */
+.swiper-horizontal > .swiper-pagination-progressbar,
+.swiper-pagination-progressbar.swiper-pagination-horizontal {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 0px !important; /* distância para baixo (podes ajustar) */
+    left: 0 !important;
+    width: 100% !important;
+    height: 4px !important;  /* altura da barra */
+    background: #d1d5db !important; /* mesma cor do bg-gray-300 */
+    z-index: 5;
+}
+
+/* parte preta da barra */
+.swiper-pagination-progressbar-fill {
+    background: #000 !important;
+}
+
+/* garantir que o carrossel permite que a progressbar saia para baixo */
+.swiper {
+    overflow: hidden !important;
+}
