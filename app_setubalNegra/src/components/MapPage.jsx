@@ -188,9 +188,39 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
       audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
-  };
-  
-  const PAINEL_ALTURA_EXPANDIDA = -300;
+  }
+
+  const contentRef = useRef(null);
+  const [limiteSubida, setLimiteSubida] = useState(-300); // Valor inicial seguro
+
+  useEffect(() => {
+    if (selectedPoi && contentRef.current) {
+      // Pequeno delay para garantir que o texto traduzido já foi renderizado
+      const timer = setTimeout(() => {
+        const alturaReal = contentRef.current.scrollHeight;
+        // Calculamos o quanto o painel deve subir. 
+        // Queremos que ele suba o tamanho do conteúdo, mas não mais que 80% da tela
+        const maximoPermitido = window.innerHeight * 0.8;
+        const finalHeight = Math.min(alturaReal + 100, maximoPermitido);
+        setLimiteSubida(-finalHeight);
+      }, 150);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedPoi, activeLang]); // Recalcula se mudar o POI ou a língua
+
+  const headerRef = useRef(null);
+  const [alturaVisivel, setAlturaVisivel] = useState(150);
+
+  useEffect(() => {
+  if (selectedPoi && headerRef.current) {
+    const timer = setTimeout(() => {
+      const hHeight = headerRef.current.offsetHeight;
+      const handleHeight = 40; // Aproximadamente o espaço da barra de arrastar + paddings
+      setAlturaVisivel(hHeight + handleHeight + 20); // 20px de margem extra
+    }, 150);
+    return () => clearTimeout(timer);
+  }
+  }, [selectedPoi, activeLang]);
 
   const handleTimeUpdate = () => {
     setCurrentTime(audioRef.current.currentTime);
@@ -285,30 +315,34 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
 
 
             <motion.div 
-              style={{ y: dragY }} 
+              style={{
+                y: dragY,
+                bottom: `calc(-100vh + ${alturaVisivel}px)` // Isto empurra o painel para baixo, deixando apenas 'alturaVisivel' para fora
+              }}
               drag="y"
               // 2. Agora o limite é fixo em -600px, não depende mais do innerHeight
-              dragConstraints={{ top: PAINEL_ALTURA_EXPANDIDA, bottom: 0 }}
-              dragElastic={0} // Trava total: não permite puxar nem mais um pixel
+              dragConstraints={{ top: limiteSubida, bottom: 0 }}
+              dragElastic={0.05} // Trava total: não permite puxar nem mais um pixel
               onDragEnd={(e, info) => {
                 // 3. Se soltar após puxar 150px, ele faz o snap para o valor fixo
-                if (info.offset.y < -150 || info.velocity.y < -300) {
+                if (info.offset.y < -100 || info.velocity.y < -300) {
                   setIsExpanded(true);
-                  animate(dragY, PAINEL_ALTURA_EXPANDIDA, { type: 'spring', damping: 25, stiffness: 300 });
+                  animate(dragY, limiteSubida, { type: 'spring', damping: 25, stiffness: 300 });
                 } else {
                   setIsExpanded(false);
                   animate(dragY, 0, { type: 'spring', damping: 25, stiffness: 300 });
                 }
                 if (info.offset.y > 150 && !isExpanded) setSelectedPoi(null);
               }}
-              className="md:hidden fixed inset-x-0 bottom-[-550px] h-full bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col touch-none overflow-hidden pointer-events-none"
+              className="md:hidden fixed inset-x-0 bottom-[-90vh] h-screen bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col touch-none pointer-events-none"
             >
+              
               <div className="w-full flex justify-center py-5 pointer-events-auto">
                 <div className="w-10 h-1 bg-black/10 rounded-full"></div>
               </div>
 
-              <div className="px-8 pb-32 flex-1 pointer-events-auto overflow-hidden">
-                <div className="mb-2">
+              <div ref={contentRef} className="px-8 pb-32 flex-1 pointer-events-auto overflow-hidden">
+                <div ref={headerRef} className="mb-2">
                   <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-2 inline-block font-bold">{t('ponto')} {selectedPoi.id}</span>
                   <div className="flex justify-between items-start">
                     <h2 className="text-xl font-bold text-black leading-tight flex-1">{t(selectedPoi.nomeKey)}</h2>
