@@ -35,63 +35,25 @@ const OpinionForm = ({ t }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white p-4 rounded-xl"
+      className="bg-white rounded-xl"
     >
-      {/* NOME */}
+      {/* Mensagem */}
       <div className="mb-4">
-        <input
+        <textarea
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="
-            w-full px-4 py-2
-            border border-black
-            rounded-full
-            text-xs tracking-wide
-            placeholder-grey
-            uppercase
+          w-full px-6 py-5 h-[300px]
+          border border-black/40
+          rounded-[30px] font-medium
+          text-[15px] focus:outline-none
+          focus:ring-0
+          focus:border-black
+          resize-none
           "
-          placeholder={t('nome_label') || 'NOME'}
-        />
-      </div>
-
-      {/* EMAIL */}
-      <div className="mb-4">
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="
-            w-full px-4 py-2
-            border border-black
-            rounded-full
-            text-xs tracking-wide
-            placeholder-grey
-            uppercase
-          "
-          placeholder={t('email_label') || 'EMAIL'}
-        />
-      </div>
-
-      {/* MENSAGEM */}
-      <div className="mb-5">
-        <textarea
-          id="opinion"
-          value={opinion}
-          onChange={(e) => setOpinion(e.target.value)}
-          rows={4}
-          required
-          className="
-            w-full px-4 py-2
-            border border-black
-            rounded-3xl
-            text-xs tracking-wide
-            placeholder-grey
-            uppercase
-          "
-          placeholder={t('opiniao_label') || 'MENSAGEM'}
+          placeholder={t('mensagem_label') || 'Mensagem'}
         />
       </div>
 

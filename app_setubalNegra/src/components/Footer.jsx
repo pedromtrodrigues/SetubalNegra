@@ -87,10 +87,10 @@ const Footer = ({ t, sections }) => {
 
                     {/* REDES SOCIAIS (Aparecem logo após o botão no Mobile) */}
                     <div className="hidden md:flex space-x-6 mt-16 md:hidden">
-                        <img src='./assets/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
-                        <img src='./assets/facebook.png' alt="Facebook" className='w-8 h-8 cursor-pointer' />
-                        <img src='./assets/linkedin.png' alt="Linkedin" className='w-8 h-8 cursor-pointer' />
-                        <img src='./assets/youtube.png' alt="Youtube" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/logos/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/logos/facebook.png' alt="Facebook" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/logos/linkedin.png' alt="Linkedin" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/logos/youtube.png' alt="Youtube" className='w-8 h-8 cursor-pointer' />
                     </div>
                 </div>
 
@@ -99,9 +99,12 @@ const Footer = ({ t, sections }) => {
                     
                     <div className="flex flex-col space-y-4 w-full md:w-auto">
                         <p className="text-[12px]">{t('organizacao')}</p>
-                        <div className="flex items-center space-x-8">
-                            <img src="assets/setubal.png" alt="Setúbal" className="h-28 md:h-24 w-auto object-contain" />
-                            <img src="assets/ips.png" alt="IPS" className="h-24 md:h-20 w-auto object-contain" />
+                        {/* Mudança: flex-wrap para as imagens saltarem de linha se não couberem */}
+                        {/* Mudança: gap em vez de space-x para funcionar bem em várias linhas */}
+                        <div className="flex flex-wrap items-center gap-6 md:gap-8">
+                            <img src="./assets/logos/setubal.png" alt="Setúbal" className="h-20 md:h-24 w-auto object-contain" />
+                            <img src="./assets/logos/ips.png" alt="IPS" className="h-16 md:h-20 w-auto object-contain" />
+                            <img src="./assets/logos/prr.jpeg" alt="PRR" className="h-16 md:h-20 w-auto object-contain" />
                         </div>
                     </div>
 

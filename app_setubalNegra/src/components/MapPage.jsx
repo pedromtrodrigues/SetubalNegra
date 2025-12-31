@@ -3,96 +3,99 @@ import { APIProvider, Map, AdvancedMarker, useMap, useMapsLibrary } from '@vis.g
 import { motion, AnimatePresence, useMotionValue, useTransform, animate } from 'framer-motion';
 import ResponsiveHeader from './ResponsiveHeader';
 
+const AUDIO_BASE_PATH = "./assets/Audios";
+const IMG_BASE_PATH = "./assets/images";
+
 const monumentos = [
   {
     id: 1,
     nomeKey: "poi_1_name",
     subKey: "poi_1_sub",
     infoKey: "poi_1_info",
-    audioPath: "./assets/ponto_1",
+    audioPath: "ponto_1",
     pos: { lat: 38.52345866090092, lng: -8.889270953156442 },
     horarioKey: "horario_1",
-    img: "./assets/alfandega.jpg",
+    img: "image_1.jpg",
   },
   {
     id: 2,
     nomeKey: "poi_2_name",
     subKey: "poi_2_sub",
     infoKey: "poi_2_info",
-    audioPath: "./assets/ponto_2",
+    audioPath: "ponto_2",
     pos: { lat: 38.52460000637646, lng: -8.88756996719753 },
     horarioKey: "horario_2",
-    img: "./assets/se_setubal.png",
+    img: "image_2.png",
   },
   {
     id: 3,
     nomeKey: "poi_3_name",
     subKey: "poi_3_sub",
     infoKey: "poi_3_info",
-    audioPath: "./assets/ponto_3",
+    audioPath: "ponto_3",
     pos: { lat: 38.524650, lng: -8.887600 },
     horarioKey: "horario_3",
-    img: "./assets/corpo_santo.png",
+    img: "image_3.png",
   },
   {
     id: 4,
     nomeKey: "poi_4_name",
     subKey: "poi_4_sub",
     infoKey: "poi_4_info",
-    audioPath: "./assets/ponto_4",
+    audioPath: "ponto_4",
     pos: { lat: 38.52596911747808, lng: -8.894628824349434 },
     horarioKey: "horario_4",
-    img: "./assets/convento_jesus.png",
+    img: "image_4.png",
   },
   {
     id: 5,
     nomeKey: "poi_5_name",
     subKey: "poi_5_sub",
     infoKey: "poi_5_info",
-    audioPath: "./assets/ponto_5",
+    audioPath: "ponto_5",
     pos: { lat: 38.52245170505707, lng: -8.900317382629833 },
     horarioKey: "horario_5",
-    img: "./assets/anunciada.png",
+    img: "image_5.png",
   },
   {
     id: 6,
     nomeKey: "poi_6_name",
     subKey: "poi_6_sub",
     infoKey: "poi_6_info",
-    audioPath: "./assets/ponto_6",
+    audioPath: "ponto_6",
     pos: { lat: 38.524222912961214, lng: -8.892668681532145 },
     horarioKey: "horario_6",
-    img: "./assets/praca_bocage.png",
+    img: "image_6.png",
   },
   {
     id: 7,
     nomeKey: "poi_7_name",
     subKey: "poi_7_sub",
     infoKey: "poi_7_info",
-    audioPath: "./assets/ponto_7",
+    audioPath: "ponto_7",
     pos: { lat: 38.523596, lng: -8.891891 },
     horarioKey: "horario_7",
-    img: "./assets/ribeira_velha.png",
+    img: "image_7.png",
   },
   {
     id: 8,
     nomeKey: "poi_8_name",
     subKey: "poi_8_sub",
     infoKey: "poi_8_info",
-    audioPath: "./assets/ponto_8",
+    audioPath: "ponto_8",
     pos: { lat: 38.5238, lng: -8.8935 },
     horarioKey: "horario_8",
-    img: "./assets/banco_portugal.png",
+    img: "image_8.png",
   },
   {
     id: 9,
     nomeKey: "poi_9_name",
     subKey: "poi_9_sub",
     infoKey: "poi_9_info",
-    audioPath: "./assets/ponto_9",
+    audioPath: "ponto_9",
     pos: { lat: 38.5241, lng: -8.8890 },
     horarioKey: "horario_9",
-    img: "./assets/pelourinho.png",
+    img: "image_1.jpg",
   }
 ];
 
@@ -160,7 +163,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
   }, []);
 
   useEffect(() => {
-    // Reset básico de estados ao mudar de ponto
     setIsPlaying(false);
     setCurrentTime(0);
     
@@ -171,7 +173,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
     
     if (selectedPoi) {
       setUltimoPontoVisitado(selectedPoi);
-      // Garantimos que o painel começa do zero se for um novo ponto
       dragY.set(0);
       setIsExpanded(false);
     }
@@ -199,7 +200,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
 
   useEffect(() => {
     if (selectedPoi && contentRef.current) {
-      // Pequeno delay para garantir que o texto traduzido já foi renderizado
+      
       const timer = setTimeout(() => {
         const alturaReal = contentRef.current.scrollHeight;
         // Calculamos o quanto o painel deve subir. 
@@ -210,13 +211,9 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [selectedPoi, activeLang]); // Recalcula se mudar o POI ou a língua
+  }, [selectedPoi, activeLang]); 
 
     
-  useEffect(() => {
-    console.log("O limiteSubida mudou para:", limiteSubida);
-  }, [limiteSubida]);
-
   const headerRef = useRef(null);
   const [alturaVisivel, setAlturaVisivel] = useState(150);
 
@@ -224,8 +221,8 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
   if (selectedPoi && headerRef.current) {
     const timer = setTimeout(() => {
       const hHeight = headerRef.current.offsetHeight;
-      const handleHeight = 40; // Aproximadamente o espaço da barra de arrastar + paddings
-      setAlturaVisivel(hHeight + handleHeight + 20); // 20px de margem extra
+      const handleHeight = 40; 
+      setAlturaVisivel(hHeight + handleHeight + 20);
     }, 150);
     return () => clearTimeout(timer);
   }
@@ -316,13 +313,14 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
           <>
             <audio 
               ref={audioRef} 
-              src={`${selectedPoi.audioPath}_${activeLang}.mp3`} 
+              src={`${AUDIO_BASE_PATH}/${selectedPoi.audioFileName}_${activeLang}.mp3`} 
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               onEnded={() => setIsPlaying(false)} 
             />
 
             
+            {/* Versão Mobile */}
             <motion.div 
               style={{
                 y: dragY,
@@ -389,7 +387,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                 </div>
 
                 <motion.div style={{ opacity: contentOpacity, scale: contentScale }} className="mt-8">
-                  <p className="text-[15px] leading-relaxed text-black/80 mb-3">{t(selectedPoi.infoKey)}</p>
 
                   <div className="w-full px-2 mb-6">
                     <input 
@@ -428,7 +425,11 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                     </div>
                   </div>
 
-                  <img src={selectedPoi.img} className="w-full h-48 object-cover rounded-[30px] shadow-lg mb-4" alt={t(selectedPoi.nomeKey)} />
+                  <img src={`${IMG_BASE_PATH}/${selectedPoi.img}`} className="w-full h-48 object-cover rounded-[30px] shadow-lg mb-4" alt={t(selectedPoi.nomeKey)} />
+                  
+                  <div className="text-black/90 italic text-sm mb-10">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
+             
+                  <p className="text-[15px] leading-relaxed text-black/80 mb-3">{t(selectedPoi.infoKey)}</p>
                   
                   {nextPoi && (
                     <button 
@@ -438,11 +439,12 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                       {t('seguir_para')} {t('ponto')} {nextPoi.id} 
                     </button>
                   )}
-                  <div className="text-black/70 italic text-sm mb-10">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
+                  
                 </motion.div>
               </div>
             </motion.div>
 
+            {/* Versão Computador */}
             <motion.div 
               initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 50 }}
               className="hidden md:block absolute top-32 right-10 w-[400px] bg-white/40 backdrop-blur-md rounded-[32px] p-8 z-[80] shadow-2xl border border-white/20 pointer-events-auto"
@@ -489,7 +491,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                 </div>
               </div>
 
-              <img src={selectedPoi.img} className="w-full h-48 object-cover rounded-2xl mb-4 shadow-md" alt={t(selectedPoi.nomeKey)} />
+              <img src={`${IMG_BASE_PATH}/${selectedPoi.img}`} className="w-full h-48 object-cover rounded-2xl mb-4 shadow-md" alt={t(selectedPoi.nomeKey)} />
               <p className="text-sm text-black/80 leading-relaxed mb-6">{t(selectedPoi.infoKey)}</p>
               {nextPoi && (
                     <button 

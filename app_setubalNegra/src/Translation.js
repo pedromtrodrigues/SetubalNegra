@@ -21,8 +21,8 @@ export const TRADUCOES = {
     'racismo_paragrafo': 'O racismo é, sem dúvida, uma das mais relevantes dimensões dos desequilíbrios sociais e das relações de poder que tem estado oculta, quer no ensino, quer na sociedade em geral. Desocultar a presença negra da cidade de Setúbal e contribuir o debate sobre o (anti)racismo na sociedade e cultura setubalense é o grande objectivo deste roteiro.',
     'construir_narrativa_1': 'Construir uma',
     'construir_narrativa_2': 'nova narrativa',
-    'construir_opiniao_1' : 'ENTRA EM CONTACTO E',
-    'construir_opiniao_2': 'DEIXA-NOS A TUA OPINIÃO',
+    'construir_opiniao_1' : 'Deixa-nos',
+    'construir_opiniao_2': 'a tua opinião',
     'camara': 'Câmara Municipal de Setúbal',
     'morada_camara': 'Praça de Bocage, 2901-866 Setúbal',
     'tel': 'Telf:',
@@ -93,18 +93,45 @@ export const TRADUCOES = {
     'sobre_nos_texto_1': 'A Escola Superior de Educação do Instituto Politécnico de Setúbal em parceria com a Câmara Municipal de Setúbal desafia a comunidade a ler a paisagem negra em Setúbal na certeza de uma educação democrática em Portugal, desocultando e promovendo o património cultural negro e afrodescendente, a reparação, valorização e promoção de afrodescendentes e comunidades negras de Setúbal, no âmbito do Roteiro Etnográfico Afro-descendentes (2017-2024).',
 
     // OPINIÃO
-    'obrigado_titulo': 'Obrigado pela sua opinião!',
-    'obrigado_desc': 'Valorizamos o seu feedback sobre a "Setúbal Negra".',
-    'nome_label': 'Nome',
-    'email_label': 'Email',
-    'opiniao_label': 'A sua Opinião',
+    'mensagem_label': 'Mensagem',
     'enviar_opiniao': 'Enviar',
 
     // CARDS
     'card_1_eps': "Episódio 1",
     'card_1_title': "Casa da Alfândega",
     'card_1_desc': "A História dos Afrodescendentes na cidade.",
-    // ... add other card titles/descs as needed
+    
+    'card_2_eps': "Episódio 2",
+    'card_2_title': "",
+    'card_2_desc': "",
+    
+    'card_3_eps': "Episódio 3",
+    'card_3_title': "",
+    'card_3_desc': "",
+    
+    'card_4_eps': "Episódio 4",
+    'card_4_title': "",
+    'card_4_desc': "",
+    
+    'card_5_eps': "Episódio 5",
+    'card_5_title': "",
+    'card_5_desc': "",
+    
+    'card_6_eps': "Episódio 6",
+    'card_6_title': "",
+    'card_6_desc': "",
+    
+    'card_7_eps': "Episódio 7",
+    'card_7_title': "",
+    'card_7_desc': "",
+    
+    'card_8_eps': "Episódio 8",
+    'card_8_title': "",
+    'card_8_desc': "",
+    
+    'card_9_eps': "Episódio 9",
+    'card_9_title': "???????????",
+    'card_9_desc': "???????????",
   },
   EN: {
     // HEADER & NAVEGAÇÃO
@@ -199,16 +226,46 @@ export const TRADUCOES = {
     'sobre_nos_texto_1': 'The School of Education of the Polytechnic Institute of Setúbal in partnership with the Municipality of Setúbal challenges the community to read the black landscape in Setúbal with the certainty of a democratic education in Portugal, unveiling and promoting the black and afro-descendant cultural heritage, the reparation, valorization and promotion of afro-descendants and black communities in Setúbal, within the scope of the Afro-descendant Ethnographic Itinerary (2017-2024).',
 
     // OPINIÃO
-    'obrigado_titulo': 'Thank you for your feedback!',
-    'obrigado_desc': 'We appreciate your feedback on "Setúbal Negra".',
-    'nome_label': 'Name',
-    'email_label': 'Email',
-    'opiniao_label': 'Your Feedback',
+    'mensagem_label': 'Mensagem',
     'enviar_opiniao': 'Send',
 
     // CARDS
     'card_1_eps': "Episode 1",
+    'card_1_title': "",
     'card_1_desc': "The History of Afro-descendants in the city.",
+    
+    
+    'card_2_eps': "Episode 2",
+    'card_2_title': "",
+    'card_2_desc': "",
+    
+    'card_3_eps': "Episode 3",
+    'card_3_title': "",
+    'card_3_desc': "",
+    
+    'card_4_eps': "Episode 4",
+    'card_4_title': "",
+    'card_4_desc': "",
+    
+    'card_5_eps': "Episode 5",
+    'card_5_title': "",
+    'card_5_desc': "",
+    
+    'card_6_eps': "Episode 6",
+    'card_6_title': "",
+    'card_6_desc': "",
+    
+    'card_7_eps': "Episode 7",
+    'card_7_title': "",
+    'card_7_desc': "",
+    
+    'card_8_eps': "Episode 8",
+    'card_8_title': "",
+    'card_8_desc': "",
+    
+    'card_9_eps': "Episode 9",
+    'card_9_title': "???????????",
+    'card_9_desc': "???????????",
   },
 };
 

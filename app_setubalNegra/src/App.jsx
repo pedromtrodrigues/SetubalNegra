@@ -76,7 +76,7 @@ const App = () => {
           <div className="w-full text-center">
             <div className="">
                 <img 
-                    src="./assets/Principal.png" 
+                    src="./assets/images/Principal.png" 
                     alt="Pintura Setúbal Negra" 
                     className="w-full h-auto object-cover rounded-md"
                     onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/500x500/A3A3A3/FFFFFF?text=Pintura+Principal"}}
@@ -152,7 +152,7 @@ const App = () => {
         </Section>
 
         <img 
-            src="./assets/city.png" 
+            src="./assets/images/city.png" 
             alt="View" 
             className="w-full h-[363px] object-cover object-center"
         />
@@ -167,14 +167,18 @@ const App = () => {
                 <div className="inline-block px-7 py-1 text-sm bg-white border border-black rounded-full mb-4">
                     {t('opiniao_1')}
                 </div>
-
+                
+                <h2 className="text-2xl leading-tight  tracking-tight mb-10">
+                    {t('construir_opiniao_1')} <br />
+                    <span className="font-bold">{t('construir_opiniao_2')}</span>
+                </h2>
+                    
                 <div className="flex flex-col md:flex-row md:space-x-24">
-                    <div className="md:w-1/2 space-y-6">
-                        <h2 className="text-2xl leading-tight uppercase tracking-tight mb-10">
-                            {t('construir_opiniao_1')} <br />
-                            <span className="font-bold">{t('construir_opiniao_2')}</span>
-                        </h2>
-
+                    <div className="md:w-1/2 mt-10 md:mt-0">
+                        <OpinionForm t={t} />
+                    </div>
+                          
+                    <div className="md:w-1/2 space-y-6 ">
                         <div className="space-y-5 text-[15px] text-black">
                             <p>
                                 <span className="block font-medium">{t('camara')}</span>
@@ -196,10 +200,6 @@ const App = () => {
                                 <span className="underline">{t('encarregado_2')}</span>
                             </p>
                         </div>
-                    </div>
-
-                    <div className="md:w-1/2 mt-10 md:mt-0">
-                        <OpinionForm t={t} />
                     </div>
                 </div>
             </div>           
