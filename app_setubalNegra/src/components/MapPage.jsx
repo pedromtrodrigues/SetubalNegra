@@ -351,10 +351,12 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
 
               <div 
                 ref={contentRef} 
-                // 2. Mudado 'overflow-hidden' para 'overflow-y-auto' e adicionado 'overscroll-contain'
-                className="px-8 pb-32 flex-1 pointer-events-auto overflow-y-auto overscroll-contain"
-                // 3. Impede que o scroll do texto arraste o painel principal
-                onPointerDown={(e) => e.stopPropagation()}
+                className={`px-8 pb-32 flex-1 pointer-events-auto overscroll-contain ${
+                  isExpanded ? 'overflow-y-auto' : 'overflow-hidden'
+                }`}
+                onPointerDown={(e) => {
+                  if (isExpanded) e.stopPropagation();
+                }}
               >
                 <div ref={headerRef} className="mb-2">
                   <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-2 inline-block font-bold">{t('ponto')} {selectedPoi.id}</span>
