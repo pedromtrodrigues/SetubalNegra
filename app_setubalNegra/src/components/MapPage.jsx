@@ -160,19 +160,22 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
   }, []);
 
   useEffect(() => {
-    setIsExpanded(false);
+    // Reset básico de estados ao mudar de ponto
     setIsPlaying(false);
     setCurrentTime(0);
-    dragY.set(0);
+    
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.load();
     }
     
     if (selectedPoi) {
-        setUltimoPontoVisitado(selectedPoi);
+      setUltimoPontoVisitado(selectedPoi);
+      // Garantimos que o painel começa do zero se for um novo ponto
+      dragY.set(0);
+      setIsExpanded(false);
     }
-  }, [selectedPoi, dragY]);
+  }, [selectedPoi])
 
 
   const nextPoi = useMemo(() => {
@@ -330,18 +333,26 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
               dragConstraints={{ top: limiteSubida, bottom: 0 }}
               dragElastic={0.02}
               onDragEnd={(e, info) => {
-                // Lógica de expandir (puxar para cima)
+                // Puxar para cima (Expandir)
                 if (info.offset.y < -100 || info.velocity.y < -300) {
                   setIsExpanded(true);
                   animate(dragY, limiteSubida, { type: 'spring', damping: 25, stiffness: 300 });
                 } 
-                // Lógica de fechar (puxar para baixo)
+                // Puxar para baixo (Recolher)
                 else if (info.offset.y > 100 || info.velocity.y > 300) {
-                  setIsExpanded(false);
-                  animate(dragY, 0, { type: 'spring', damping: 25, stiffness: 300 });
+                  // IMPORTANTE: Primeiro animamos o painel para baixo (posição 0)
+                  animate(dragY, 0, { 
+                    type: 'spring', 
+                    damping: 25, 
+                    stiffness: 300,
+                    onComplete: () => {
+                      // Só marcamos como não expandido quando a animação acaba
+                      setIsExpanded(false);
+                      // Só agora limpamos o scroll, quando o utilizador já não vê o interior
+                      if (contentRef.current) contentRef.current.scrollTop = 0;
+                    }
+                  });
                 }
-                
-                if (info.offset.y > 150 && !isExpanded) setSelectedPoi(null);
               }}
               className="md:hidden fixed inset-x-0 bottom-[-90vh] h-screen bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col pointer-events-none"
             >
