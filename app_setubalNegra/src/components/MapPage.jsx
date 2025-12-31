@@ -326,26 +326,28 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                 bottom: `calc(-100vh + ${alturaVisivel}px)`
               }}
               drag="y"
-              dragListener={!isExpanded}
+              // Permitimos o drag, mas vamos controlar o conflito dentro da div de conteúdo
               dragConstraints={{ top: limiteSubida, bottom: 0 }}
-              dragElastic={0.05}
+              dragElastic={0.02}
               onDragEnd={(e, info) => {
+                // Lógica de expandir (puxar para cima)
                 if (info.offset.y < -100 || info.velocity.y < -300) {
                   setIsExpanded(true);
                   animate(dragY, limiteSubida, { type: 'spring', damping: 25, stiffness: 300 });
-                } else {
+                } 
+                // Lógica de fechar (puxar para baixo)
+                else if (info.offset.y > 100 || info.velocity.y > 300) {
                   setIsExpanded(false);
                   animate(dragY, 0, { type: 'spring', damping: 25, stiffness: 300 });
                 }
+                
                 if (info.offset.y > 150 && !isExpanded) setSelectedPoi(null);
               }}
-              // 1. Removido 'touch-none' para permitir interação de scroll
               className="md:hidden fixed inset-x-0 bottom-[-90vh] h-screen bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col pointer-events-none"
             >
               
               {/* Esta zona (handle) continua a servir para arrastar o painel */}
-              <div className="w-full flex justify-center py-5 pointer-events-auto cursor-grab"
-                onPointerDown={(e) => !isExpanded && e.stopPropagation()}>
+              <div className="w-full flex justify-center py-5 pointer-events-auto cursor-grab">
                 <div className="w-10 h-1 bg-black/10 rounded-full"></div>
               </div>
 
@@ -355,7 +357,15 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                   isExpanded ? 'overflow-y-auto' : 'overflow-hidden'
                 }`}
                 onPointerDown={(e) => {
-                  if (isExpanded) e.stopPropagation();
+                  // Se o scroll não estiver no topo, impedimos que o drag do painel comece
+                  // Isso permite que o utilizador faça scroll normalmente
+                  if (isExpanded && contentRef.current.scrollTop > 0) {
+                    e.stopPropagation();
+                  }
+                }}
+                onScroll={(e) => {
+                  // Se o utilizador fizer scroll até ao topo, podemos opcionalmente 
+                  // libertar o drag, mas o stopPropagation no onPointerDown costuma bastar.
                 }}
               >
                 <div ref={headerRef} className="mb-2">
