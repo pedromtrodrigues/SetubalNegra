@@ -87,10 +87,10 @@ const Footer = ({ t, sections }) => {
 
                     {/* REDES SOCIAIS (Aparecem logo após o botão no Mobile) */}
                     <div className="hidden md:flex space-x-6 mt-16 md:hidden">
-                        <img src='/assets/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
-                        <img src='/assets/facebook.png' alt="Facebook" className='w-8 h-8 cursor-pointer' />
-                        <img src='/assets/linkedin.png' alt="Linkedin" className='w-8 h-8 cursor-pointer' />
-                        <img src='/assets/youtube.png' alt="Youtube" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/facebook.png' alt="Facebook" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/linkedin.png' alt="Linkedin" className='w-8 h-8 cursor-pointer' />
+                        <img src='./assets/youtube.png' alt="Youtube" className='w-8 h-8 cursor-pointer' />
                     </div>
                 </div>
 
