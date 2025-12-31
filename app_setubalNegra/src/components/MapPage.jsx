@@ -163,7 +163,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
     setIsExpanded(false);
     setIsPlaying(false);
     setCurrentTime(0);
-    dragY.set(0);
 
     // --- ESTA É A LINHA QUE DEVES ADICIONAR ---
     if (contentRef.current) {
