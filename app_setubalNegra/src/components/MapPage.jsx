@@ -317,14 +317,12 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
             <motion.div 
               style={{
                 y: dragY,
-                bottom: `calc(-100vh + ${alturaVisivel}px)` // Isto empurra o painel para baixo, deixando apenas 'alturaVisivel' para fora
+                bottom: `calc(-100vh + ${alturaVisivel}px)`
               }}
               drag="y"
-              // 2. Agora o limite é fixo em -600px, não depende mais do innerHeight
-              dragConstraints={{ top: limiteSubida, bottom: 0 }}
-              dragElastic={0.05} // Trava total: não permite puxar nem mais um pixel
+              dragConstraints={{ top: 300, bottom: 0 }}
+              dragElastic={0.05}
               onDragEnd={(e, info) => {
-                // 3. Se soltar após puxar 150px, ele faz o snap para o valor fixo
                 if (info.offset.y < -100 || info.velocity.y < -300) {
                   setIsExpanded(true);
                   animate(dragY, limiteSubida, { type: 'spring', damping: 25, stiffness: 300 });
@@ -334,14 +332,22 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                 }
                 if (info.offset.y > 150 && !isExpanded) setSelectedPoi(null);
               }}
-              className="md:hidden fixed inset-x-0 bottom-[-90vh] h-screen bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col touch-none pointer-events-none"
+              // 1. Removido 'touch-none' para permitir interação de scroll
+              className="md:hidden fixed inset-x-0 bottom-[-90vh] h-screen bg-white/40 backdrop-blur-xl rounded-t-[40px] shadow-2xl z-[80] border-t border-white/40 flex flex-col pointer-events-none"
             >
               
-              <div className="w-full flex justify-center py-5 pointer-events-auto">
+              {/* Esta zona (handle) continua a servir para arrastar o painel */}
+              <div className="w-full flex justify-center py-5 pointer-events-auto cursor-grab">
                 <div className="w-10 h-1 bg-black/10 rounded-full"></div>
               </div>
 
-              <div ref={contentRef} className="px-8 pb-32 flex-1 pointer-events-auto overflow-hidden">
+              <div 
+                ref={contentRef} 
+                // 2. Mudado 'overflow-hidden' para 'overflow-y-auto' e adicionado 'overscroll-contain'
+                className="px-8 pb-32 flex-1 pointer-events-auto overflow-y-auto overscroll-contain"
+                // 3. Impede que o scroll do texto arraste o painel principal
+                onPointerDown={(e) => e.stopPropagation()}
+              >
                 <div ref={headerRef} className="mb-2">
                   <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-2 inline-block font-bold">{t('ponto')} {selectedPoi.id}</span>
                   <div className="flex justify-between items-start">
@@ -401,7 +407,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
                       {t('seguir_para')} {t('ponto')} {nextPoi.id} 
                     </button>
                   )}
-                  <div className="text-black/70 italic text-sm">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
+                  <div className="text-black/70 italic text-sm mb-10">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
                 </motion.div>
               </div>
             </motion.div>
