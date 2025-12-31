@@ -174,6 +174,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
     }
   }, [selectedPoi, dragY]);
 
+
   const nextPoi = useMemo(() => {
     if (!selectedPoi) return monumentos[0];
     const currentIndex = monumentos.findIndex(m => m.id === selectedPoi.id);
@@ -200,13 +201,18 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
         const alturaReal = contentRef.current.scrollHeight;
         // Calculamos o quanto o painel deve subir. 
         // Queremos que ele suba o tamanho do conteúdo, mas não mais que 80% da tela
-        const maximoPermitido = window.innerHeight * 0.8;
+        const maximoPermitido = window.innerHeight * 0.7;
         const finalHeight = Math.min(alturaReal + 100, maximoPermitido);
         setLimiteSubida(-finalHeight);
       }, 150);
       return () => clearTimeout(timer);
     }
   }, [selectedPoi, activeLang]); // Recalcula se mudar o POI ou a língua
+
+    
+  useEffect(() => {
+    console.log("O limiteSubida mudou para:", limiteSubida);
+  }, [limiteSubida]);
 
   const headerRef = useRef(null);
   const [alturaVisivel, setAlturaVisivel] = useState(150);
@@ -313,14 +319,15 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
               onEnded={() => setIsPlaying(false)} 
             />
 
-
+            
             <motion.div 
               style={{
                 y: dragY,
                 bottom: `calc(-100vh + ${alturaVisivel}px)`
               }}
               drag="y"
-              dragConstraints={{ top: 300, bottom: 0 }}
+              dragListener={!isExpanded}
+              dragConstraints={{ top: limiteSubida, bottom: 0 }}
               dragElastic={0.05}
               onDragEnd={(e, info) => {
                 if (info.offset.y < -100 || info.velocity.y < -300) {
@@ -337,7 +344,8 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
             >
               
               {/* Esta zona (handle) continua a servir para arrastar o painel */}
-              <div className="w-full flex justify-center py-5 pointer-events-auto cursor-grab">
+              <div className="w-full flex justify-center py-5 pointer-events-auto cursor-grab"
+                onPointerDown={(e) => !isExpanded && e.stopPropagation()}>
                 <div className="w-10 h-1 bg-black/10 rounded-full"></div>
               </div>
 
