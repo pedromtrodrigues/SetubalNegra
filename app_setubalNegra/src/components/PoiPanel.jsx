@@ -76,6 +76,8 @@ const PoiPanel = ({
     // Valores padrão para todos os outros POIs
     return isDesktop ? 0.15 : 0.15;
   };
+  
+  const [snapIndex, setSnapIndex] = useState(1);
 
 
 // 2. Montar os SnapPoints dinâmicos
@@ -101,6 +103,7 @@ const PoiPanel = ({
         onClose={() => setSelectedPoi(null)}
         snapPoints={dynamicSnapPoints} // Usa a variável dinâmica
         initialSnap={1} // Usa o índice dinâmico
+        onSnap={(index) => setSnapIndex(index)}
       >
         {/* Adicionei classes md: para limitar a largura e centrar no Desktop */}
         <Sheet.Container className="!bg-white/40 !backdrop-blur-xl !rounded-t-[40px] !border-t !border-white/40 shadow-2xl md:max-w-full md:mx-auto">
@@ -112,9 +115,12 @@ const PoiPanel = ({
           
           <Sheet.Content>
             <Sheet.Scroller 
+            draggable={snapIndex === 0}
+            className={`px-6 md:px-12 pb-20 ${snapIndex !== 0 ? 'overflow-hidden' : 'overflow-y-auto'}`}
             style={{ 
-              msOverflowStyle: 'none', 
               scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              touchAction: snapIndex === 0 ? 'auto' : 'none' // Bloqueia toque no mobile se não estiver aberto
             }}
             className="[&::-webkit-scrollbar]:hidden px-8 pb-32" >
               {/* Header do POI */}                
