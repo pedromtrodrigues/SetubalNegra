@@ -1,25 +1,22 @@
-// App.jsx (Versão Final com Integração de Mapa)
-
+// App.jsx (Versão com Animações Framer Motion)
 import React, { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion'; // Importação das animações
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-// 1. IMPORTAÇÕES DA TRADUÇÃO E UTILIDADES
 import { useTranslation } from './Translation'; 
 import { scrollToSection } from './utils/ScrollUtils'; 
 import { cardData } from './data/CardData'; 
 
-// 2. IMPORTAÇÕES DOS COMPONENTES
 import ResponsiveHeader from './components/ResponsiveHeader';
 import Section from './components/Section';
 import ResourceCarousel from './components/ResourceCarousel';
 import OpinionForm from './components/OpinionForm';
 import Footer from './components/Footer';
-import MapPage from './components/MapPage'; // Certifica-te de criar este componente
+import MapPage from './components/MapPage';
 
 const BACKGROUND_COLOR = 'bg-[#EBECE6]'; 
 
-// Estrutura das Secções
 const sectionsWithKeys = [
   { nameKey: 'visita_guiada', id: 'visita-guiada'},
   { nameKey: 'sobre_nos', id: 'sobre-nos'},
@@ -27,13 +24,15 @@ const sectionsWithKeys = [
   { nameKey: 'contactos', id: 'contactos'},
 ];
 
+// Variantes de animação para reutilizar
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
+};
+
 const App = () => {
   const [activeSection, setActiveSection] = useState('top');
-  
-  // ESTADO PARA CONTROLAR A VISIBILIDADE DO MAPA
   const [showMap, setShowMap] = useState(false);
-  
-  // LÓGICA DE IDIOMA CENTRALIZADA
   const [activeLang, setActiveLang] = useState('PT'); 
   const t = useTranslation(activeLang); 
   
@@ -46,171 +45,216 @@ const App = () => {
     scrollToSection(id);
   }, []);
 
-    // SE O MAPA ESTIVER ATIVO, RENDERIZA APENAS O COMPONENTE DO MAPA
-
- if (showMap) {
-    return (
-        <MapPage 
-        onBack={() => setShowMap(false)} 
-        t={t} 
-        activeLang={activeLang} 
-        handleLangChange={handleLangChange} // ADICIONA ESTA LINHA
-        />);
- }
-
   return (
-    <div className={`min-h-screen font-sans ${BACKGROUND_COLOR}`} id="top"> 
+    <div className={`min-h-screen font-sans ${BACKGROUND_COLOR}`} id="top">
       
-      <ResponsiveHeader 
-        onNavigate={handleNavigation} 
-        activeLang={activeLang}
-        handleLangChange={handleLangChange}
-        sections={sectionsWithKeys}
-        t={t} 
-      /> 
+      {/* 1. Transição Suave para o Mapa */}
+      <AnimatePresence mode="wait">
+        {showMap ? (
+          <motion.div
+            key="map"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.5 }}
+          >
+            <MapPage 
+              onBack={() => setShowMap(false)} 
+              t={t} 
+              activeLang={activeLang} 
+              handleLangChange={handleLangChange} 
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <ResponsiveHeader 
+              onNavigate={handleNavigation} 
+              activeLang={activeLang}
+              handleLangChange={handleLangChange}
+              sections={sectionsWithKeys}
+              t={t} 
+            /> 
 
-      <main>
-        
-        {/* SECÇÃO HERO / PINTURA */}
-        <Section id="hero" className="min-h-screen flex items-center justify-center pt-24 pb-0 md:pb-12 bg-[#E9E8E3]"> 
-          <div className="w-full text-center">
-            <div className="">
-                <img 
-                    src="./assets/images/Principal.png" 
-                    alt="Pintura Setúbal Negra" 
-                    className="w-full h-auto object-cover rounded-md"
-                    onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/500x500/A3A3A3/FFFFFF?text=Pintura+Principal"}}
-                />
-                
-                {/* BOTÃO ALTERADO: Agora ativa o estado showMap */}
-                <button 
-                    onClick={() => {
-                        window.scrollTo(0, 0); // Força o topo
-                        setShowMap(true);
-                    }}
-                    className="mt-4 px-8 py-3 bg-white text-black text-base font-normal rounded-[20px]  transition duration-150 inline-flex justify-center items-center"
-                >
-                    {t('comecar_visita')} 
-                </button>
-            </div>
-          </div>
-        </Section>
-        
-        {/* SECÇÃO VISITA GUIADA + INTRODUÇÃO */}
-        <Section id="visita-guiada" className="bg-white">
-            <div className="mt-5 w-[99%] mx-auto h-px bg-black my-0"></div>
-            <div className='pt-[79px]'>
-                <div className="inline-block px-7 py-1 text-sm bg-white border border-black rounded-full mb-4">
-                    {t('visita_guiada')} 
+            <main>
+              {/* SECÇÃO HERO com Parallax Simples */}
+              <Section id="hero" className="min-h-screen flex items-center justify-center pt-24 pb-0 md:pb-12 bg-[#E9E8E3]"> 
+                <div className="w-full text-center">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                  >
+                      <img 
+                          src="./assets/images/Principal.png" 
+                          alt="Pintura Setúbal Negra" 
+                          className="w-full h-auto object-cover rounded-md"
+                      />
+                      
+                      <motion.button 
+                          whileHover={{ scale: 1.05, backgroundColor: "#000", color: "#fff" }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => {
+                              window.scrollTo(0, 0);
+                              setShowMap(true);
+                          }}
+                          className="mt-4 px-8 py-3 bg-white text-black text-base font-normal rounded-[20px] transition duration-150 inline-flex justify-center items-center shadow-sm"
+                      >
+                          {t('comecar_visita')} 
+                      </motion.button>
+                  </motion.div>
                 </div>
+              </Section>
+              
+              {/* SECÇÃO VISITA GUIADA - Animação ao fazer Scroll */}
+              <Section id="visita-guiada" className="bg-white">
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "99%" }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    className="mt-5 mx-auto h-px bg-black my-0"
+                  />
+                  
+                  <motion.div 
+                    className='pt-[79px]'
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    variants={fadeInUp}
+                  >
+                      <div className="inline-block px-7 py-1 text-sm bg-white border border-black rounded-full mb-4">
+                          {t('visita_guiada')} 
+                      </div>
 
-                <div className="flex flex-col md:flex-row md:space-x-12">
-                    <div className="md:w-1/3 mb-4 md:mb-0">
-                        <h2 className="text-4xl">
-                            Copy Copy <br />
-                            <span className="font-bold">Copy Copy</span>
-                        </h2>
-                    </div>
+                      <div className="flex flex-col md:flex-row md:space-x-12">
+                          <div className="md:w-1/3 mb-4 md:mb-0">
+                              <h2 className="text-4xl">
+                                  Copy Copy <br />
+                                  <span className="font-bold">Copy Copy</span>
+                              </h2>
+                          </div>
 
-                    <div className="md:w-2/3">
-                        <p className="text-lg leading-relaxed">
-                            {t('racismo_paragrafo')} 
-                        </p>
-                    </div>
-                </div>
-            </div>
+                          <div className="md:w-2/3">
+                              <p className="text-lg leading-relaxed">
+                                  {t('racismo_paragrafo')} 
+                              </p>
+                          </div>
+                      </div>
+                  </motion.div>
 
-            <div className="mt-20">
-                <ResourceCarousel 
-                    cardData={cardData}
-                    t={t} 
-                />
-            </div>
-        </Section>
+                  <motion.div 
+                    className="mt-20"
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                      <ResourceCarousel cardData={cardData} t={t} />
+                  </motion.div>
+              </Section>
 
-        {/* SECÇÃO SOBRE NÓS */}
-        <Section id="sobre-nos" className="bg-[#E9E8E3]">
-            <div className="mt-5 w-[99%] mx-auto h-px bg-black my-0"></div>
-            <div className="mt-12 max-w-5xl mx-auto mb-20">
-                <div className="inline-block px-7 py-1 text-sm bg-[#E9E8E3] border border-black rounded-full mb-4">
-                    {t('sobre_nos')} 
-                </div>
-                <div className="flex flex-col md:flex-row md:space-x-12">
-                    <div className="md:w-1/3 mb-4 md:mb-0">
-                        <h2 className="text-3xl ">
+              {/* SECÇÃO SOBRE NÓS */}
+              <Section id="sobre-nos" className="bg-[#E9E8E3]">
+                  <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={fadeInUp}
+                    className="mt-12 max-w-5xl mx-auto mb-20"
+                  >
+                      <div className="inline-block px-7 py-1 text-sm bg-[#E9E8E3] border border-black rounded-full mb-4">
+                          {t('sobre_nos')} 
+                      </div>
+                      <div className="flex flex-col md:flex-row md:space-x-12">
+                          <div className="md:w-1/3 mb-4 md:mb-0">
+                              <h2 className="text-3xl ">
                                   {t('construir_narrativa_1')} <br />
                                   <span className='font-bold'>{t('construir_narrativa_2')}</span>
-                        </h2>
-                    </div>
-                    <div className="md:w-2/3">
-                        <p>
-                            {t('sobre_nos_texto_1')} 
-                        </p>
-                    </div>
-                </div>                
-            </div>   
-        </Section>
+                              </h2>
+                          </div>
+                          <div className="md:w-2/3">
+                              <p>{t('sobre_nos_texto_1')}</p>
+                          </div>
+                      </div>                
+                  </motion.div>   
+              </Section>
 
-        <img 
-            src="./assets/images/city.png" 
-            alt="View" 
-            className="w-full h-[363px] object-cover object-center"
-        />
-        
-        {/* SECÇÃO DEIXA-NOS A TUA OPINIÃO */}
-        <Section id="opiniao" className="bg-white">
-            <div className='pt-[79px]'>
-                <div className="mt-5 w-[99%] mx-auto h-px bg-black my-0"></div>      
-            </div>
-        
-            <div className="mt-20 max-w-6xl mx-auto px-4 mb-20">
-                <div className="inline-block px-7 py-1 text-sm bg-white border border-black rounded-full mb-4">
-                    {t('opiniao_1')}
-                </div>
-                
-                <h2 className="text-2xl leading-tight  tracking-tight mb-10">
-                    {t('construir_opiniao_1')} <br />
-                    <span className="font-bold">{t('construir_opiniao_2')}</span>
-                </h2>
-                    
-                <div className="flex flex-col md:flex-row md:space-x-24">
-                    <div className="md:w-1/2 mt-10 md:mt-0">
-                        <OpinionForm t={t} />
-                    </div>
+              <motion.img 
+                  initial={{ opacity: 0, filter: "grayscale(100%)" }}
+                  whileInView={{ opacity: 1, filter: "grayscale(0%)" }}
+                  transition={{ duration: 1.5 }}
+                  src="./assets/images/city.png" 
+                  alt="View" 
+                  className="w-full h-[363px] object-cover object-center"
+              />
+              
+              {/* OPINIÃO E CONTACTOS */}
+              <Section id="opiniao" className="bg-white">
+                  <div className='pt-[79px]'>
+                      <div className="mt-5 w-[99%] mx-auto h-px bg-black my-0"></div>      
+                  </div>
+              
+                  <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    variants={fadeInUp}
+                    className="mt-20 max-w-6xl mx-auto px-4 mb-20"
+                  >
+                      <div className="inline-block px-7 py-1 text-sm bg-white border border-black rounded-full mb-4">
+                          {t('opiniao_1')}
+                      </div>
+                      
+                      <h2 className="text-2xl leading-tight mb-10">
+                          {t('construir_opiniao_1')} <br />
+                          <span className="font-bold">{t('construir_opiniao_2')}</span>
+                      </h2>
                           
-                    <div className="md:w-1/2 space-y-6 ">
-                        <div className="space-y-5 text-[15px] text-black">
-                            <p>
-                                <span className="block font-medium">{t('camara')}</span>
-                                <span className="block">{t('morada_camara')}</span>
-                            </p>
-                            <p>
-                                {t('tel')} <span className="underline">{t('tel_1')}</span> <br/> 
-                                <span className="text-xs">{t('tel_2')}</span>
-                            </p>
-                            <p>
-                                {t('email_1')} <span className="underline">{t('email_2')}</span>
-                            </p>
-                            <p>
-                                {t('atendimento_1')} <br/>
-                                <span className="underline">{t('atendimento_2')}</span>
-                            </p>
-                            <p>
-                                {t('encarregado_1')} <br/>
-                                <span className="underline">{t('encarregado_2')}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>           
-        </Section>
+                      <div className="flex flex-col md:flex-row md:space-x-24">
+                          <div className="md:w-1/2">
+                              <OpinionForm t={t} />
+                          </div>
+                                
+                          <motion.div 
+                            className="md:w-1/2 space-y-6 mt-10 md:mt-0"
+                            initial={{ x: 20, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                          >
+                            {/* Conteúdo dos contactos mantido igual */}
+                            <div className="space-y-5 text-[15px] text-black">
+                                <p>
+                                    <span className="block font-medium">{t('camara')}</span>
+                                    <span className="block">{t('morada_camara')}</span>
+                                </p>
+                                <p>
+                                    {t('tel')} <span className="underline">{t('tel_1')}</span> <br/> 
+                                    <span className="text-xs">{t('tel_2')}</span>
+                                </p>
+                                <p>
+                                    {t('email_1')} <span className="underline">{t('email_2')}</span>
+                                </p>
+                                <p>
+                                    {t('atendimento_1')} <br/>
+                                    <span className="underline">{t('atendimento_2')}</span>
+                                </p>
+                                <p>
+                                    {t('encarregado_1')} <br/>
+                                    <span className="underline">{t('encarregado_2')}</span>
+                                </p>
+                            </div>
+                          </motion.div>
+                      </div>
+                  </motion.div>           
+              </Section>
+            </main>
 
-      </main>
-
-      <Footer 
-        t={t} 
-        sections={sectionsWithKeys} 
-      />
+            <Footer t={t} sections={sectionsWithKeys} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@vis.gl/react-google-maps": "^1.7.1",
-    "framer-motion": "^12.23.26",
+    "framer-motion": "^12.24.12",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-modal-sheet": "^4.0.1",

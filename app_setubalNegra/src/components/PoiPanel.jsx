@@ -48,7 +48,7 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
 
   // Lógica de Exceções de Snap
   const getSnapEspreitar = () => {
-    if (selectedPoi?.id === 7) return isDesktop ? 0.18 : 0.23;
+    if (selectedPoi?.id === 7) return isDesktop ? 0.20 : 0.23;
     if (selectedPoi?.id === 1 || selectedPoi?.id === 2) return isDesktop ? 0.15 : 0.17;
     return 0.15;
   };
