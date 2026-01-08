@@ -112,21 +112,23 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
                       <span>{formatTime(currentTime)}</span><span>{formatTime(duration)}</span>
                     </div>
                   </div>
-                  <button 
-                        onClick={toggleAudio} 
-                        className="w-10 h-10 border border-black rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform shadow-xl"
-                      >
-                        {isPlaying ? (
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <rect x="6" y="4" width="4" height="16" rx="1" />
-                            <rect x="14" y="4" width="4" height="16" rx="1" />
-                          </svg>
-                        ) : (
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
-                            <path d="M5 3l14 9-14 9V3z" />
-                          </svg>
-                        )}
+                  <div className="flex justify-center items-center space-x-10">                
+                    <button 
+                      onClick={toggleAudio} 
+                      className="w-10 h-10 border border-black rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform shadow-xl"
+                    >
+                      {isPlaying ? (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                          <rect x="6" y="4" width="4" height="16" rx="1" />
+                          <rect x="14" y="4" width="4" height="16" rx="1" />
+                        </svg>
+                      ) : (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
+                          <path d="M5 3l14 9-14 9V3z" />
+                        </svg>
+                      )}
                     </button>
+                  </div>
                 </div>
               </div>
 
