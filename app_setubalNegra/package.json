@@ -13,11 +13,18 @@
   },
   "dependencies": {
     "@vis.gl/react-google-maps": "^1.7.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.24.12",
+    "lucide-react": "^0.562.0",
+    "motion": "^12.25.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-modal-sheet": "^4.0.1",
-    "swiper": "^12.0.3"
+    "react-spinners": "^0.17.0",
+    "swiper": "^12.0.3",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

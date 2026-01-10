@@ -73,7 +73,7 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
         initialSnap={1}
         onSnap={(index) => setSnapIndex(index)}
       >
-        <Sheet.Container className="!bg-white/40 !backdrop-blur-xl !rounded-t-[40px] !border-t !border-white/40 shadow-2xl md:max-w-full md:mx-auto">
+        <Sheet.Container className="md:px-8 !bg-white/40 !backdrop-blur-xl !rounded-t-[40px] !border-t !border-white/40 shadow-2xl md:max-w-full md:mx-auto">
           <Sheet.Header>
             <div className="w-full flex justify-center py-5">
               <div className="w-10 h-1 bg-black/10 rounded-full"></div>
@@ -137,20 +137,20 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
               <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
                 <img 
                   src={`${IMG_BASE_PATH}/${selectedPoi.img}`} 
-                  className="w-full md:w-1/2 h-48 md:h-80 object-cover rounded-[30px] shadow-lg" 
+                  className="w-full md:w-1/2 h-48 md:h-[60vh] object-cover rounded-[30px] shadow-lg" 
                   alt="" 
                 /> 
                 
                 <div className="w-full md:flex-1 flex flex-col">
-                  <div className="text-black/90 italic text-sm mb-4">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
-                  <p className="text-[15px] leading-relaxed text-black/80 mb-8 whitespace-pre-line">
+                  <div className="md:order-2 md:mt-20 text-black/90 italic text-sm mb-4">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
+                  <p className="md:order-1 text-[15px] leading-relaxed text-black/80 mb-8 whitespace-pre-line">
                     {t(selectedPoi.infoKey)}
                   </p>
                   
                   {nextPoi && (
                     <button 
                       onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); }} 
-                      className="w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4"
+                      className="md:order-3 md:mt-20 w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4"
                     >
                       {t('seguir_para')} {t('ponto')} {nextPoi.id} 
                     </button>
@@ -163,6 +163,7 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
         </Sheet.Container>
         <Sheet.Backdrop />
       </Sheet>
+      
     </>
   );
 };

@@ -48,8 +48,7 @@ const Directions = ({ userLocation, destination, activeRoute }) => {
   return null;
 };
 
-const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
-  const [selectedPoi, setSelectedPoi] = useState(null);
+const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSelectedPoi }) => {
   const [ultimoPontoVisitado, setUltimoPontoVisitado] = useState(monumentos[0]);
   const [userLocation, setUserLocation] = useState({ lat: 38.5244, lng: -8.8926 });
   const [activeRoute, setActiveRoute] = useState(false);
@@ -58,7 +57,13 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
   const mapId = import.meta.env.VITE_GOOGLE_MAPS_ID;
 
   useEffect(() => {
-    if (selectedPoi) setUltimoPontoVisitado(selectedPoi);
+    if (selectedPoi) {
+      document.body.style.overflow = 'hidden';
+      setUltimoPontoVisitado(selectedPoi);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
   }, [selectedPoi]);
 
   const nextPoi = useMemo(() => {
@@ -76,6 +81,15 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
 
   return (
     <div className="fixed inset-0 w-full h-full z-[60] bg-[#EBECE6] overflow-hidden flex flex-col font-sans text-black">
+      
+      {/* BLOQUEIO: Overlay que cobre Header (70) e botões (50) quando um POI está aberto */}
+      {selectedPoi && (
+        <div 
+          className="fixed inset-0 z-[100] bg-black/10 backdrop-blur-[2px] cursor-default" 
+          onClick={() => setSelectedPoi(null)}
+        />
+      )}
+
       <div className="z-[70]">
         <ResponsiveHeader 
           transparent={true} 
@@ -98,17 +112,27 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
               className="w-full h-full"
             >
               {monumentos.map((m) => (
-                <AdvancedMarker key={m.id} position={m.pos} onClick={() => { setSelectedPoi(m); setActiveRoute(false); }}>
-                  <div className="w-10 h-10 bg-white border border-black rounded-full flex items-center justify-center cursor-pointer text-black">
+                <AdvancedMarker
+                  key={m.id}
+                  position={m.pos}
+                  onClick={() => {
+                    if (selectedPoi) return; 
+                    setSelectedPoi(m);
+                  }}
+                >
+                  {/* Estilo do botão circular aplicado aqui */}
+                  <div className="w-10 h-10 bg-white border border-black rounded-full flex items-center justify-center cursor-pointer text-black font-bold shadow-md hover:bg-gray-100 transition-colors">
                     {m.id}
                   </div>
                 </AdvancedMarker>
               ))}
+              
               {userLocation && (
                 <AdvancedMarker position={userLocation}>
                   <div className="w-5 h-5 bg-blue-600 border-2 border-white rounded-full shadow-lg animate-pulse" />
                 </AdvancedMarker>
               )}
+              
               <Directions 
                 userLocation={userLocation} 
                 destination={selectedPoi ? selectedPoi.pos : ultimoPontoVisitado.pos} 
@@ -139,15 +163,17 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange }) => {
         </div>
       )}
 
-      {/* Versão Sheet Mobile */}
-      <PoiPanel 
-        selectedPoi={selectedPoi}
-        setSelectedPoi={setSelectedPoi}
-        nextPoi={nextPoi}
-        setActiveRoute={setActiveRoute}
-        activeLang={activeLang}
-        t={t}
-      />
+      {/* PoiPanel com o maior z-index para ficar acima do bloqueio */}
+      <div className="relative z-[110]">
+        <PoiPanel 
+          selectedPoi={selectedPoi}
+          setSelectedPoi={setSelectedPoi}
+          nextPoi={nextPoi}
+          setActiveRoute={setActiveRoute}
+          activeLang={activeLang}
+          t={t}
+        />
+      </div>
     </div>
   );
 };

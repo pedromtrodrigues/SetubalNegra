@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+.pointer-events-none {
+  pointer-events: none;
+  opacity: 0.7; /* Opcional: dá um aspeto visual de estar desativado */
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;

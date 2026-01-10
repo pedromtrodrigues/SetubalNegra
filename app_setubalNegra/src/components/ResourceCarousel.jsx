@@ -28,7 +28,7 @@ const ResourceCarousel = ({ cardData, t }) => {
                 className="w-full"
             >
                 {cardData.map((card, index) => (
-                    <SwiperSlide key={index}>
+                    <SwiperSlide key={index} >
                         <ResourceCard
                             imageSrc={card.img}
                             epsKey={card.epsKey}

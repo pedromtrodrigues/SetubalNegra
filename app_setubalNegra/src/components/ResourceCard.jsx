@@ -9,7 +9,7 @@ const ResourceCard = ({ imageSrc, epsKey, titleKey, descriptionKey, t }) => {
         <img 
           src={imageSrc} 
           alt={t(epsKey)} 
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="w-full h-full object-cover transition-transform duration-300 rounded-[30px]"
           onError={(e) => { e.target.onerror = null; e.target.src="https://placehold.co/400x400/A3A3A3/FFFFFF?text=Imagem"}}
         />
       </div>

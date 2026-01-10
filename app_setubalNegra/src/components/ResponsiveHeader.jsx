@@ -155,16 +155,21 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
                 <div className="flex items-center space-x-3">
                   {/* Imagem de Setúbal */}
                   <img 
-                    src="./assets/setubal.png" 
+                    src="./assets/logos/setubal.png" 
                     alt="Setubal" 
-                    className="h-[100px] w-auto object-contain" 
+                    className="h-[100px] mt-7 w-auto object-contain" 
                   />
                   {/* Imagem do IPS - ligeiramente menor na altura para equilibrar o peso visual */}
                   <img 
-                    src="./assets/ips.png" 
+                    src="./assets/logos/ips.png" 
                     alt="IPS" 
-                    className="h-[90px] w-auto object-contain" 
+                    className="h-[90px] mt-6 w-auto object-contain" 
                   />
+                  <img 
+                      src="./assets/logos/prr.jpeg" 
+                      alt="PRR" 
+                      className="h-[90px] w-auto object-contain" 
+                    />
                 </div>
               </div>
             </div>

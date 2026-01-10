@@ -8,6 +8,7 @@ export const TRADUCOES = {
     'opiniao_1': 'Contactos',
     'opiniao': 'Deixa-nos a tua opinião',
     'contactos': 'Contactos',
+    'experiencia' : 'A carregar experiência ...',
     
     // CORPO GERAL
     'organizacao': 'Organização:',
@@ -141,6 +142,7 @@ export const TRADUCOES = {
     'opiniao': 'Leave us your feedback',
     'contactos': 'Contact',
     'download_flyer': 'Download Flyer',
+    'experiencia' : 'Loading experience ...',
     
     // CORPO GERAL
     'organizacao': 'Organization:',
