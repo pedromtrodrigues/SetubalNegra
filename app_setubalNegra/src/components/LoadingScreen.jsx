@@ -20,7 +20,7 @@ const LoadingScreen = ({ t }) => {
         />
         
         {/* Texto SN no centro do círculo */}
-        <span className="absolute text-2xl font-bold  text-black">
+        <span className="font-sans absolute text-2xl font-bold text-black">
           SN
         </span>
       </div>
@@ -29,7 +29,7 @@ const LoadingScreen = ({ t }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mt-6 text-xs uppercase tracking-[0.2em] text-black"
+        className="font-sans mt-6 text-black items-center"
       >
         {t('experiencia')}
       </motion.p>

@@ -5,12 +5,14 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
   const [isOpen, setIsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   
-  // --- LÓGICA DE VISIBILIDADE NO SCROLL ---
   const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const controlNavbar = () => {
+      setIsScrolled(window.scrollY > 20);
+      
       if (isOpen) return; 
       if (window.scrollY > lastScrollY && window.scrollY > 100) { 
         setIsVisible(false);
@@ -24,16 +26,9 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY, isOpen]);
 
-  // --- BLOQUEAR SCROLL QUANDO O MENU ABRE ---
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
   const handleNavigation = (id) => {
@@ -44,11 +39,12 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
   return (
     <>
       <header className={`
-        fixed top-0 w-full z-50 h-24 flex flex-col justify-center transition-all duration-300 ease-in-out
+        fixed top-0 w-full z-50 h-20 flex flex-col justify-center transition-all duration-300 ease-in-out
         ${isVisible ? 'translate-y-0' : '-translate-y-full'}
+        ${isScrolled ? 'shadow-md' : 'shadow-none'} 
         ${transparent 
-          ? 'bg-white/40 backdrop-blur-md shadow-none' 
-          : 'bg-[#E9E8E3] shadow-md'}
+          ? (isScrolled ? 'bg-white/90 backdrop-blur-md' : 'bg-white/40 backdrop-blur-md') 
+          : 'bg-[#E9E8E3] '}
       `}>
         <div className="w-full px-6 md:px-20">
           <div className="flex items-center justify-between w-full">
@@ -57,10 +53,16 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
             </h1>
 
             <nav className="hidden md:flex items-center space-x-12">
-              <a onClick={() => handleNavigation('sobre-nos')} className="cursor-pointer font-medium hover:opacity-60 transition">Sobre nós</a>
-              <a onClick={() => handleNavigation('contactos')} className="cursor-pointer font-medium hover:opacity-60 transition">Contactos</a>
+              {sections.map((section) => (
+                <a 
+                  key={section.id}
+                  onClick={() => handleNavigation(section.id)} 
+                  className="cursor-pointer font-medium hover:opacity-60 transition"
+                >
+                  {t(section.nameKey)}
+                </a>
+              ))}
               
-
               <div className="relative">
                 <button 
                   onClick={() => setIsLangOpen(!isLangOpen)}
@@ -70,7 +72,7 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
                   <ChevronDown size={16} className={isLangOpen ? 'rotate-180' : ''} />
                 </button>
                 {isLangOpen && (
-                  <div className="absolute right-0 mt-2 bg-white rounded-md z-[110]">
+                  <div className="absolute right-0 mt-2 bg-white rounded-md z-[110] shadow-lg">
                     {['PT', 'EN'].map((lang) => (
                       <button
                         key={lang}
@@ -90,18 +92,16 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
             </button>
           </div>
 
-          {/* A LINHA QUE QUERIAS MANTER: 
-              Adicionámos apenas uma opacidade suave para combinar com o fundo fosco */}
-          <div className="mt-4 w-full h-[1px] bg-black opacity-20"></div>
+          <div className={`absolute bottom-0 w-full h-[1px] bg-black transition-opacity duration-300 ${isScrolled ? 'opacity-0' : 'opacity-30'}`}></div>
         </div>
       </header>
 
-      {/* --- MOBILE MENU OVERLAY --- */}
+      {/* --- MOBILE MENU OVERLAY (Restaurado o teu CSS original) --- */}
        <div
         className={`fixed inset-0 z-[100] bg-[#E9E8E3] md:hidden transition-transform duration-500 ease-in-out transform 
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <div className="flex flex-col h-full overflow-y-auto"> {/* Adicionado overflow-y-auto aqui se o menu for longo */}
+        <div className="flex flex-col h-full overflow-y-auto">
             <div className="flex justify-between items-center px-8 h-24">
               <h1 className="text-[28px]" onClick={() => handleNavigation('top')}>
                 Setúbal <span className="font-bold">Negra</span>
@@ -132,10 +132,9 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
                   )}
                 </div>
               ))}
-
-              
             </nav>
 
+            {/* Footer do Mobile - Voltei a meter as tuas margens e tamanhos exatos */}
             <div className="mt-auto p-8">
               <div className="flex space-x-4 justify-center mb-12">
                 {['PT', 'EN'].map(lang => (
@@ -153,23 +152,9 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
               <div className="flex flex-col space-y-2">
                 <p className="text-[12px]">{t('organizacao')}</p>
                 <div className="flex items-center space-x-3">
-                  {/* Imagem de Setúbal */}
-                  <img 
-                    src="./assets/logos/setubal.png" 
-                    alt="Setubal" 
-                    className="h-[100px] mt-7 w-auto object-contain" 
-                  />
-                  {/* Imagem do IPS - ligeiramente menor na altura para equilibrar o peso visual */}
-                  <img 
-                    src="./assets/logos/ips.png" 
-                    alt="IPS" 
-                    className="h-[90px] mt-6 w-auto object-contain" 
-                  />
-                  <img 
-                      src="./assets/logos/prr.jpeg" 
-                      alt="PRR" 
-                      className="h-[90px] w-auto object-contain" 
-                    />
+                  <img src="./assets/logos/setubal.png" alt="Setubal" className="h-[100px] mt-7 w-auto object-contain" />
+                  <img src="./assets/logos/ips.png" alt="IPS" className="h-[90px] mt-6 w-auto object-contain" />
+                  <img src="./assets/logos/PRR.png" alt="PRR" className="h-[90px] w-auto object-contain" />
                 </div>
               </div>
             </div>

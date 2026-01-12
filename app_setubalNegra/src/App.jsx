@@ -23,7 +23,6 @@ const BACKGROUND_COLOR = 'bg-[#EBECE6]';
 const sectionsWithKeys = [
   { nameKey: 'visita_guiada', id: 'visita-guiada'},
   { nameKey: 'sobre_nos', id: 'sobre-nos'},
-  { nameKey: 'opiniao', id: 'opiniao'},
   { nameKey: 'contactos', id: 'contactos'},
 ];
 
@@ -45,7 +44,6 @@ const App = () => {
   }, []);
 
   const handleNavigation = useCallback((id) => {
-    setActiveSection(id);
     scrollToSection(id);
   }, []);
 
@@ -102,13 +100,11 @@ const App = () => {
             /> 
 
             <main>
-              {/* SECÇÃO inicial */}
+              {/* SECÇÃO INICIAL */}
               <Section 
                 id="hero" 
                 className="min-h-screen flex flex-col items-center justify-center bg-[#E9E8E3] px-4"
               > 
-                {/* Removi o pt-24 para o centro ser matemático. 
-                    Se o Header tapar o topo, podes ajustar com mt-24 ou deixar o Flex tratar disso. */}
                 
                 <div className="w-full max-w-4xl mx-auto text-center">
                   <motion.div 
@@ -177,14 +173,7 @@ const App = () => {
                       </div>
                   </motion.div>
 
-                  <motion.div 
-                    className="mt-20"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                  >
-                      <ResourceCarousel cardData={cardData} t={t} />
-                  </motion.div>
+                  <ResourceCarousel cardData={cardData} t={t} />
               </Section>
 
               {/* SECÇÃO SOBRE NÓS */}
@@ -223,7 +212,7 @@ const App = () => {
               />
               
               {/* OPINIÃO E CONTACTOS */}
-              <Section id="opiniao" className="bg-white">
+              <Section id="contactos" className="bg-white">
                   <div className='pt-[79px]'>
                       <div className="mt-5 w-[99%] mx-auto h-px bg-black my-0"></div>      
                   </div>

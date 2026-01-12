@@ -99,40 +99,31 @@ export const TRADUCOES = {
 
     // CARDS
     'card_1_eps': "Episódio 1",
-    'card_1_title': "Casa da Alfândega",
-    'card_1_desc': "A História dos Afrodescendentes na cidade.",
+    'card_1_title': "Bilioteca Municipal",
     
     'card_2_eps': "Episódio 2",
-    'card_2_title': "",
-    'card_2_desc': "",
+    'card_2_title': "Igreja de Santa Maria da Graça",   
     
     'card_3_eps': "Episódio 3",
-    'card_3_title': "",
-    'card_3_desc': "",
+    'card_3_title': "Casa do Corpo Santo",
     
     'card_4_eps': "Episódio 4",
-    'card_4_title': "",
-    'card_4_desc': "",
+    'card_4_title': "Convento de Jesus",
     
     'card_5_eps': "Episódio 5",
-    'card_5_title': "",
-    'card_5_desc': "",
+    'card_5_title': "Igreja da Anunciada",
     
     'card_6_eps': "Episódio 6",
-    'card_6_title': "",
-    'card_6_desc': "",
+    'card_6_title': "Praça de Bocage",
     
     'card_7_eps': "Episódio 7",
-    'card_7_title': "",
-    'card_7_desc': "",
+    'card_7_title': "Largo da Ribeira Velha",
     
     'card_8_eps': "Episódio 8",
-    'card_8_title': "",
-    'card_8_desc': "",
+    'card_8_title': "Galeria do banco de Portugal",
     
     'card_9_eps': "Episódio 9",
     'card_9_title': "???????????",
-    'card_9_desc': "???????????",
   },
   EN: {
     // HEADER & NAVEGAÇÃO
@@ -233,41 +224,31 @@ export const TRADUCOES = {
 
     // CARDS
     'card_1_eps': "Episode 1",
-    'card_1_title': "",
-    'card_1_desc': "The History of Afro-descendants in the city.",
-    
+    'card_1_title': "Municipal Library",
     
     'card_2_eps': "Episode 2",
-    'card_2_title': "",
-    'card_2_desc': "",
+    'card_2_title': "Church of Santa Maria da Graça",
     
     'card_3_eps': "Episode 3",
-    'card_3_title': "",
-    'card_3_desc': "",
+    'card_3_title': "Casa do Corpo Santo",
     
     'card_4_eps': "Episode 4",
-    'card_4_title': "",
-    'card_4_desc': "",
+    'card_4_title': "Convent of Jesus",
     
     'card_5_eps': "Episode 5",
-    'card_5_title': "",
-    'card_5_desc': "",
+    'card_5_title': "Church of the annunciation",
     
     'card_6_eps': "Episode 6",
-    'card_6_title': "",
-    'card_6_desc': "",
+    'card_6_title': "Praça da bocage",
     
     'card_7_eps': "Episode 7",
-    'card_7_title': "",
-    'card_7_desc': "",
+    'card_7_title': "Largo da Ribeira Velha",
     
     'card_8_eps': "Episode 8",
-    'card_8_title': "",
-    'card_8_desc': "",
-    
+    'card_8_title': "Banco de Portugal Gallery",
+
     'card_9_eps': "Episode 9",
     'card_9_title': "???????????",
-    'card_9_desc': "???????????",
   },
 };
 

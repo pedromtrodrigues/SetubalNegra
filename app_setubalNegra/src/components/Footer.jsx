@@ -31,16 +31,11 @@ const Footer = ({ t, sections }) => {
 
                         <nav className="flex flex-col w-full max-w-full md:max-w-[300px]">
                             {sections
-                                .filter(section => 
-                                    section.id !== 'opiniao' && 
-                                    section.nameKey !== 'deixa_opiniao' && 
-                                    !section.nameKey.includes('opiniao')
-                                )
                                 .map((section, index, filteredArray) => (
                                 <div key={section.id}>
                                     <a
                                         onClick={() => handleFooterNavigation(section.id)}
-                                        className="block py-4 text-[28px] md:text-[30px] cursor-pointer hover:opacity-60 transition"
+                                        className="block py-4 text-[24px] md:text-[24px] cursor-pointer hover:opacity-60 transition"
                                     >
                                         {t(section.nameKey)}
                                     </a>
@@ -51,8 +46,12 @@ const Footer = ({ t, sections }) => {
                                 </div>
                                 ))
                             }
-                            
-                            
+                            <div className="md:hidden mt-20 space-x-6 mt-16 flex">
+                                <img src='./assets/logos/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
+                                <img src='./assets/logos/facebook.png' alt="Facebook" className='w-8 h-8 cursor-pointer' />
+                                <img src='./assets/logos/linkedin.png' alt="Linkedin" className='w-8 h-8 cursor-pointer' />
+                                <img src='./assets/logos/youtube.png' alt="Youtube" className='w-8 h-8 cursor-pointer' />
+                            </div>
                         </nav>
                     </div>
 
@@ -70,6 +69,13 @@ const Footer = ({ t, sections }) => {
                                     <p className="text-[12px]">(chamada para a rede fixa nacional)</p>
                                 </div>
                                 <p>Email: <span className="underline underline-offset-4">{t('email_2')}</span></p>
+
+                                <div className="mt-20 md:flex space-x-6 mt-16">
+                                    <img src='./assets/logos/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
+                                    <img src='./assets/logos/facebook.png' alt="Facebook" className='w-8 h-8 cursor-pointer' />
+                                    <img src='./assets/logos/linkedin.png' alt="Linkedin" className='w-8 h-8 cursor-pointer' />
+                                    <img src='./assets/logos/youtube.png' alt="Youtube" className='w-8 h-8 cursor-pointer' />
+                                </div>
                             </div>
                         </div>
 
@@ -86,12 +92,7 @@ const Footer = ({ t, sections }) => {
                     </div>
 
                     {/* REDES SOCIAIS (Aparecem logo após o botão no Mobile) */}
-                    <div className="hidden md:flex space-x-6 mt-16 md:hidden">
-                        <img src='./assets/logos/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
-                        <img src='./assets/logos/facebook.png' alt="Facebook" className='w-8 h-8 cursor-pointer' />
-                        <img src='./assets/logos/linkedin.png' alt="Linkedin" className='w-8 h-8 cursor-pointer' />
-                        <img src='./assets/logos/youtube.png' alt="Youtube" className='w-8 h-8 cursor-pointer' />
-                    </div>
+                    
                 </div>
 
                 {/* SECÇÃO FINAL: Organização e Links Legais */}
@@ -104,7 +105,7 @@ const Footer = ({ t, sections }) => {
                         <div className="flex flex-wrap items-center gap-6 md:gap-8">
                             <img src="./assets/logos/setubal.png" alt="Setúbal" className="h-20 md:h-24 w-auto object-contain" />
                             <img src="./assets/logos/ips.png" alt="IPS" className="h-16 md:h-20 w-auto object-contain" />
-                            <img src="./assets/logos/prr.jpeg" alt="PRR" className="h-16 md:h-20 w-auto object-contain" />
+                            <img src="./assets/logos/PRR.png" alt="PRR" className="h-16 md:h-20 w-auto object-contain" />
                         </div>
                     </div>
 
