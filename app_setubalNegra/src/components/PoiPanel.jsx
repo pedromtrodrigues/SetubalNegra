@@ -55,6 +55,16 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
 
   const dynamicSnapPoints = [isDesktop ? 0.9 : 0.85, getSnapEspreitar(), 0];
 
+  const handleNextPoiNavigation = () => {
+    setSelectedPoi(nextPoi); 
+    setActiveRoute(true);
+    
+    // Se estiver no mobile, força o snap para a posição de "espreitar" (índice 1)
+    if (!isDesktop && sheetRef.current) {
+      sheetRef.current.snapTo(1);
+    }
+  };
+
   return (
     <>
       <audio 
@@ -149,7 +159,7 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
                   
                   {nextPoi && (
                     <button 
-                      onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); }} 
+                      onClick={handleNextPoiNavigation}
                       className="md:order-3 md:mt-20 w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4"
                     >
                       {t('seguir_para')} {t('ponto')} {nextPoi.id} 
@@ -161,7 +171,6 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
             </Sheet.Scroller>
           </Sheet.Content>
         </Sheet.Container>
-        <Sheet.Backdrop />
       </Sheet>
       
     </>

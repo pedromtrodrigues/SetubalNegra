@@ -58,7 +58,6 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
 
   useEffect(() => {
     if (selectedPoi) {
-      document.body.style.overflow = 'hidden';
       setUltimoPontoVisitado(selectedPoi);
     } else {
       document.body.style.overflow = 'unset';
@@ -80,12 +79,13 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
   ];
 
   return (
-    <div className="fixed inset-0 w-full h-full z-[60] bg-[#EBECE6] overflow-hidden flex flex-col font-sans text-black">
+    /* AJUSTE: Mudei "overflow-hidden" para "overflow-y-auto" no desktop (md:overflow-y-auto) */
+    <div className="fixed inset-0 w-full h-full z-[60] bg-[#EBECE6] overflow-hidden md:overflow-y-auto flex flex-col font-sans text-black">
       
       {/* BLOQUEIO: Overlay que cobre Header (70) e botões (50) quando um POI está aberto */}
       {selectedPoi && (
         <div 
-          className="fixed inset-0 z-[100] bg-black/10 backdrop-blur-[2px] cursor-default" 
+          className="fixed inset-0 z-[100] bg-black/10 cursor-default" 
           onClick={() => setSelectedPoi(null)}
         />
       )}
@@ -101,7 +101,8 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
         />
       </div>
 
-      <div className="absolute inset-0 w-full h-full z-10">
+      /* AJUSTE: No desktop, o mapa deve ser "fixed" para não rolar com o conteúdo do painel */
+      <div className="absolute md:fixed inset-0 w-full h-full z-10">
         {apiKey ? (
           <APIProvider apiKey={apiKey} libraries={['routes']}>
             <Map 
@@ -120,8 +121,7 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
                     setSelectedPoi(m);
                   }}
                 >
-                  {/* Estilo do botão circular aplicado aqui */}
-                  <div className="w-10 h-10 bg-white border border-black rounded-full flex items-center justify-center cursor-pointer text-black font-bold shadow-md hover:bg-gray-100 transition-colors">
+                  <div className="w-10 h-10 bg-white border border-black/40 rounded-full flex items-center justify-center cursor-pointer text-black shadow-md hover:bg-gray-100 transition-colors">
                     {m.id}
                   </div>
                 </AdvancedMarker>
@@ -156,7 +156,13 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
 
           <button 
             onClick={() => setActiveRoute(!activeRoute)} 
-            className={`flex-1 max-w-[200px] bg-white/90 py-4 rounded-full font-bold text-[10px] uppercase tracking-wider shadow-2xl transition-all pointer-events-auto ${activeRoute ? 'bg-red-500 text-white' : 'bg-white text-black border border-black'}`}
+            className={`
+              flex-1 max-w-[200px] py-4 rounded-full font-bold text-[10px] uppercase tracking-wider shadow-2xl transition-all pointer-events-auto
+              ${activeRoute 
+                ? 'bg-red-600 text-white border-transparent shadow-red-200' 
+                : 'bg-white/90 text-black border border-black shadow-lg'    
+              }
+            `}
           >
             {activeRoute ? t('parar') : `${t('ponto')} ${ultimoPontoVisitado.id}`}
           </button>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 
-const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigate, transparent }) => {
+const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigate, transparent}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
   
@@ -53,15 +53,18 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
             </h1>
 
             <nav className="hidden md:flex items-center space-x-12">
-              {sections.map((section) => (
-                <a 
-                  key={section.id}
-                  onClick={() => handleNavigation(section.id)} 
-                  className="cursor-pointer font-medium hover:opacity-60 transition"
-                >
-                  {t(section.nameKey)}
-                </a>
-              ))}
+              {sections
+                .filter(section => section.id !== 'visita-guiada') // Remove a Visita Guiada da lista
+                .map((section) => (
+                  <a 
+                    key={section.id}
+                    onClick={() => handleNavigation(section.id)} 
+                    className="cursor-pointer font-medium transition"
+                  >
+                    {t(section.nameKey)}
+                  </a>
+                ))
+              }
               
               <div className="relative">
                 <button 
@@ -92,11 +95,11 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
             </button>
           </div>
 
-          <div className={`absolute bottom-0 w-full h-[1px] bg-black transition-opacity duration-300 ${isScrolled ? 'opacity-0' : 'opacity-30'}`}></div>
+          <div className={`absolute bottom-0 w-[92%] h-[1px] bg-black transition-opacity duration-300 ${isScrolled ? 'opacity-0' : 'opacity-30'}`}></div>
         </div>
       </header>
 
-      {/* --- MOBILE MENU OVERLAY (Restaurado o teu CSS original) --- */}
+      {/* --- MOBILE MENU OVERLAY  --- */}
        <div
         className={`fixed inset-0 z-[100] bg-[#E9E8E3] md:hidden transition-transform duration-500 ease-in-out transform 
         ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
@@ -134,7 +137,7 @@ const ResponsiveHeader = ({ activeLang, handleLangChange, t, sections, onNavigat
               ))}
             </nav>
 
-            {/* Footer do Mobile - Voltei a meter as tuas margens e tamanhos exatos */}
+            
             <div className="mt-auto p-8">
               <div className="flex space-x-4 justify-center mb-12">
                 {['PT', 'EN'].map(lang => (

@@ -26,7 +26,6 @@ const sectionsWithKeys = [
   { nameKey: 'contactos', id: 'contactos'},
 ];
 
-// Variantes de animação para reutilizar
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8 } }
@@ -47,25 +46,21 @@ const App = () => {
     scrollToSection(id);
   }, []);
 
-  // FUNÇÃO MESTRE: Faz a ponte entre o site e o mapa com um loading no meio
+ 
   const handleStartVisit = () => {
-    setIsLoading(true); // Ativa o ecrã de loading
-    window.scrollTo(0, 0);
-
-    // Simula o tempo de carregamento (2.5 segundos)
+    setIsLoading(true); 
+    window.scrollTo(0, 0);  
     setTimeout(() => {
-      setIsLoading(false); // Esconde o loading
-      setShowMap(true);    // Mostra o mapa
+      setIsLoading(false); 
+      setShowMap(true);
     }, 2500);
   };
     
   return (
     <div className={`min-h-screen font-sans ${BACKGROUND_COLOR}`} id="top">
       
-      {/* 1. Transição Suave para o Mapa */}
       <AnimatePresence mode="wait">
         {isLoading ? (
-          /* 1. ECRA DE CARREGAMENTO */
           <LoadingScreen key="loading" t={t}/>
         ) : showMap ? (
           <motion.div
@@ -208,14 +203,17 @@ const App = () => {
                   transition={{ duration: 1.5 }}
                   src="./assets/images/city.png" 
                   alt="View" 
-                  className="w-full h-[363px] object-cover object-center"
+                  className="w-full h-5% object-cover object-center"
               />
               
               {/* OPINIÃO E CONTACTOS */}
               <Section id="contactos" className="bg-white">
-                  <div className='pt-[79px]'>
-                      <div className="mt-5 w-[99%] mx-auto h-px bg-black my-0"></div>      
-                  </div>
+                  <motion.div 
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "99%" }}
+                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    className="mt-5 mx-auto h-px bg-black my-0"
+                  />
               
                   <motion.div 
                     initial="hidden"
@@ -233,7 +231,7 @@ const App = () => {
                       </h2>
                           
                       <div className="flex flex-col md:flex-row md:space-x-24">
-                        <div className="md:w-1/2">
+                        <div className="md:w-3/4">
                             <OpinionForm t={t} />
                         </div>
                                 
@@ -244,9 +242,8 @@ const App = () => {
                             viewport={{ once: true }}
                             variants={fadeInUp}
                           >
-                            {/* Conteúdo dos contactos mantido igual */}
                           <div
-                            className="space-y-5 text-[15px] text-black"
+                            className="space-y-5 text-[16px] text-black"
                           >
                             <p>
                                 <span className="block font-medium">{t('camara')}</span>
