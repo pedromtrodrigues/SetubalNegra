@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { APIProvider, Map, AdvancedMarker, useMap, useMapsLibrary } from '@vis.gl/react-google-maps';
 import ResponsiveHeader from './ResponsiveHeader';
 import PoiPanel from './PoiPanel';
+import Footer from './Footer';
 
 const monumentos = [
   { id: 1, nomeKey: "poi_1_name", subKey: "poi_1_sub", infoKey: "poi_1_info", audioPath: "ponto_1", pos: { lat: 38.52345866090092, lng: -8.889270953156442 }, horarioKey: "horario_1", img: "image_1.jpg" },
@@ -23,8 +24,7 @@ const Directions = ({ userLocation, destination, activeRoute }) => {
   useEffect(() => {
     if (!routesLibrary || !map) return;
     const renderer = new routesLibrary.DirectionsRenderer({
-      map,
-      suppressMarkers: true,
+      map, suppressMarkers: true,
       polylineOptions: { strokeColor: "#000000", strokeWeight: 5, strokeOpacity: 0.8 }
     });
     setDirectionsRenderer(renderer);
@@ -38,9 +38,7 @@ const Directions = ({ userLocation, destination, activeRoute }) => {
     }
     const directionsService = new routesLibrary.DirectionsService();
     directionsService.route({
-      origin: userLocation,
-      destination: destination,
-      travelMode: google.maps.TravelMode.WALKING
+      origin: userLocation, destination: destination, travelMode: google.maps.TravelMode.WALKING
     }, (result, status) => {
       if (status === 'OK') directionsRenderer.setDirections(result);
     });
@@ -56,11 +54,14 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const mapId = import.meta.env.VITE_GOOGLE_MAPS_ID;
 
+  // Ajuste do scroll para permitir ver o conteúdo abaixo do mapa no Desktop
   useEffect(() => {
     if (selectedPoi) {
       setUltimoPontoVisitado(selectedPoi);
+      document.body.style.overflow = window.innerWidth >= 768 ? 'auto' : 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
     }
     return () => { document.body.style.overflow = 'unset'; };
   }, [selectedPoi]);
@@ -72,72 +73,41 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
   }, [selectedPoi]);
 
   const sectionsWithKeys = [
-    { nameKey: 'visita_guiada', id: 'visita-guiada' },
     { nameKey: 'sobre_nos', id: 'sobre-nos' },
-    { nameKey: 'opiniao', id: 'opiniao' },
     { nameKey: 'contactos', id: 'contactos' },
   ];
 
   return (
-    /* AJUSTE: Mudei "overflow-hidden" para "overflow-y-auto" no desktop (md:overflow-y-auto) */
-    <div className="fixed inset-0 w-full h-full z-[60] bg-[#EBECE6] overflow-hidden md:overflow-y-auto flex flex-col font-sans text-black">
+    <div className={`w-full bg-[#ffffff] font-sans text-black ${selectedPoi && window.innerWidth >= 768 ? 'relative' : 'fixed inset-0 overflow-hidden'}`}>
       
-      {/* BLOQUEIO: Overlay que cobre Header (70) e botões (50) quando um POI está aberto */}
-      {selectedPoi && (
-        <div 
-          className="fixed inset-0 z-[100] bg-black/10 cursor-default" 
-          onClick={() => setSelectedPoi(null)}
-        />
+      {/* Overlay Mobile */}
+      {selectedPoi && window.innerWidth < 768 && (
+        <div className="fixed inset-0 z-[100] bg-black/10 cursor-default" onClick={() => setSelectedPoi(null)} />
       )}
 
-      <div className="z-[70]">
-        <ResponsiveHeader 
-          transparent={true} 
-          onNavigate={onBack} 
-          activeLang={activeLang}
-          handleLangChange={handleLangChange}
-          sections={sectionsWithKeys}
-          t={t}
-        />
+      {/* Header Fixo */}
+      <div className="fixed top-0 left-0 w-full z-[120]">
+        <ResponsiveHeader transparent={true} onNavigate={onBack} activeLang={activeLang} handleLangChange={handleLangChange} sections={sectionsWithKeys} t={t} />
       </div>
 
-      /* AJUSTE: No desktop, o mapa deve ser "fixed" para não rolar com o conteúdo do painel */
-      <div className="absolute md:fixed inset-0 w-full h-full z-10">
+      {/* Container do Mapa: No Desktop não é fixed para permitir scroll, mas tem altura definida */}
+      <div className={`${selectedPoi && window.innerWidth >= 768 ? 'relative h-[60vh] md:h-[105vh]' : 'absolute inset-0 h-full'} w-full z-10`}>
         {apiKey ? (
           <APIProvider apiKey={apiKey} libraries={['routes']}>
-            <Map 
-              defaultCenter={{ lat: 38.5244, lng: -8.8931 }} 
-              defaultZoom={17} 
-              mapId={mapId} 
-              disableDefaultUI={true}
-              className="w-full h-full"
-            >
+            <Map defaultCenter={{ lat: 38.5244, lng: -8.8931 }} defaultZoom={17} mapId={mapId} disableDefaultUI={true} className="w-full h-full">
               {monumentos.map((m) => (
-                <AdvancedMarker
-                  key={m.id}
-                  position={m.pos}
-                  onClick={() => {
-                    if (selectedPoi) return; 
-                    setSelectedPoi(m);
-                  }}
-                >
+                <AdvancedMarker key={m.id} position={m.pos} onClick={() => setSelectedPoi(m)}>
                   <div className="w-10 h-10 bg-white border border-black/40 rounded-full flex items-center justify-center cursor-pointer text-black shadow-md hover:bg-gray-100 transition-colors">
                     {m.id}
                   </div>
                 </AdvancedMarker>
               ))}
-              
               {userLocation && (
                 <AdvancedMarker position={userLocation}>
                   <div className="w-5 h-5 bg-blue-600 border-2 border-white rounded-full shadow-lg animate-pulse" />
                 </AdvancedMarker>
               )}
-              
-              <Directions 
-                userLocation={userLocation} 
-                destination={selectedPoi ? selectedPoi.pos : ultimoPontoVisitado.pos} 
-                activeRoute={activeRoute} 
-              />
+              <Directions userLocation={userLocation} destination={selectedPoi ? selectedPoi.pos : ultimoPontoVisitado.pos} activeRoute={activeRoute} />
             </Map>
           </APIProvider>
         ) : (
@@ -145,41 +115,36 @@ const MapPage = ({ onBack, t, activeLang, handleLangChange, selectedPoi, setSele
         )}
       </div>
 
+      {/* Botões Flutuantes (Mapa inicial) */}
       {!selectedPoi && (
         <div className="absolute inset-x-0 bottom-10 flex flex-row justify-center items-center space-x-3 px-6 z-[50] pointer-events-none">
-          <button 
-            onClick={onBack} 
-            className="flex-1 max-w-[200px] py-4 bg-white/90 border border-black rounded-full font-bold text-[10px] uppercase tracking-wider text-black shadow-lg pointer-events-auto"
-          >
+          <button onClick={onBack} className="flex-1 max-w-[200px] py-4 bg-white/90 border border-black rounded-full font-bold text-[10px] uppercase tracking-wider text-black shadow-lg pointer-events-auto">
             {t('voltar')}
           </button>
-
-          <button 
-            onClick={() => setActiveRoute(!activeRoute)} 
-            className={`
-              flex-1 max-w-[200px] py-4 rounded-full font-bold text-[10px] uppercase tracking-wider shadow-2xl transition-all pointer-events-auto
-              ${activeRoute 
-                ? 'bg-red-600 text-white border-transparent shadow-red-200' 
-                : 'bg-white/90 text-black border border-black shadow-lg'    
-              }
-            `}
-          >
+          <button onClick={() => setActiveRoute(!activeRoute)} className={`flex-1 max-w-[200px] py-4 rounded-full font-bold text-[10px] uppercase tracking-wider shadow-2xl transition-all pointer-events-auto ${activeRoute ? 'bg-red-600 text-white' : 'bg-white/90 text-black border border-black'}`}>
             {activeRoute ? t('parar') : `${t('ponto')} ${ultimoPontoVisitado.id}`}
           </button>
         </div>
       )}
 
-      {/* PoiPanel com o maior z-index para ficar acima do bloqueio */}
-      <div className="relative z-[110]">
-        <PoiPanel 
-          selectedPoi={selectedPoi}
-          setSelectedPoi={setSelectedPoi}
-          nextPoi={nextPoi}
-          setActiveRoute={setActiveRoute}
-          activeLang={activeLang}
-          t={t}
-        />
-      </div>
+      {/* Conteúdo do Monumento + Footer */}
+      {selectedPoi && (
+        <div className="relative">
+          <PoiPanel
+            transparent={true}
+            selectedPoi={selectedPoi} 
+            setSelectedPoi={setSelectedPoi} 
+            nextPoi={nextPoi} 
+            setActiveRoute={setActiveRoute} 
+            activeLang={activeLang} 
+            t={t} 
+          />
+          <div className="hidden md:block"> 
+            <Footer  t={t} sections={sectionsWithKeys} />
+          </div>
+
+        </div>
+      )}
     </div>
   );
 };

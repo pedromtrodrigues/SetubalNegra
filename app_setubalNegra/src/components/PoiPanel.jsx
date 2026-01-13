@@ -14,7 +14,6 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
   const [snapIndex, setSnapIndex] = useState(1);
 
-  // Formatação de tempo e percentagem
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -22,7 +21,6 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
   };
   const progressPercent = duration ? (currentTime / duration) * 100 : 0;
 
-  // Listeners e Effects
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 768);
     window.addEventListener('resize', handleResize);
@@ -46,25 +44,81 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
 
   if (!selectedPoi) return null;
 
-  // Lógica de Exceções de Snap
-  const getSnapEspreitar = () => {
-    if (selectedPoi?.id === 7) return isDesktop ? 0.20 : 0.23;
-    if (selectedPoi?.id === 1 || selectedPoi?.id === 2) return isDesktop ? 0.15 : 0.17;
-    return 0.15;
-  };
-
-  const dynamicSnapPoints = [isDesktop ? 0.9 : 0.85, getSnapEspreitar(), 0];
-
   const handleNextPoiNavigation = () => {
     setSelectedPoi(nextPoi); 
     setActiveRoute(true);
-    
-    // Se estiver no mobile, força o snap para a posição de "espreitar" (índice 1)
     if (!isDesktop && sheetRef.current) {
       sheetRef.current.snapTo(1);
     }
   };
 
+  // --- VERSÃO DESKTOP (Bloco novo para scroll na página) ---
+  if (isDesktop) {
+    return (
+      <div 
+        className="w-full bg-white/40 backdrop-blur-xl border-t border-white/40 px-8 md:px-16 py-20 relative z-[110] md:-mt-32 rounded-t-[50px]"
+      >
+        <audio 
+          ref={audioRef} 
+          src={`${AUDIO_BASE_PATH}/${selectedPoi.audioPath}_${activeLang}.mp3`} 
+          onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
+          onLoadedMetadata={() => setDuration(audioRef.current.duration)}
+          onEnded={() => setIsPlaying(false)} 
+        />
+        <div className="max-w-7xl mx-auto">
+           {/* HEADER (Título e Player) */}
+           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 w-full mb-10">
+                <div className="md:flex-1">
+                  <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-2 inline-block font-bold uppercase tracking-wider">
+                    {t('ponto')} {selectedPoi.id}
+                  </span>
+                  <h2 className="text-xl md:text-2xl font-bold text-black leading-tight">{t(selectedPoi.nomeKey)}</h2>
+                  <p className="text-[13px] opacity-40 text-black font-medium">{t(selectedPoi.subKey)}</p>
+                </div>
+                
+                <div className="w-full md:w-[50%] flex flex-col md:flex-row md:items-center gap-4">
+                  <div className="flex-1">
+                    <input 
+                      type="range" min="0" max={duration} value={currentTime} 
+                      onChange={(e) => { audioRef.current.currentTime = Number(e.target.value); }} 
+                      className="w-full h-[3px] rounded-full appearance-none cursor-pointer accent-black"
+                      style={{ background: `linear-gradient(to right, #000000 ${progressPercent}%, rgba(0,0,0,0.1) ${progressPercent}%)` }}
+                    />
+                    <div className="flex justify-between text-[11px] mt-1 font-medium text-black/40">
+                      <span>{formatTime(currentTime)}</span><span>{formatTime(duration)}</span>
+                    </div>
+                  </div>
+                  <div className="flex justify-center items-center space-x-10">                
+                    <button onClick={toggleAudio} className="w-10 h-10 border border-black rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform shadow-xl bg-white/20 backdrop-blur-sm">
+                      {isPlaying ? (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
+                      ) : (
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="ml-1"><path d="M5 3l14 9-14 9V3z" /></svg>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* CONTEÚDO (Imagem e Texto) */}
+              <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
+                <img src={`${IMG_BASE_PATH}/${selectedPoi.img}`} className="w-full md:w-1/2 h-48 md:h-[60vh] object-cover rounded-[30px] shadow-lg" alt="" /> 
+                <div className="w-full md:flex-1 flex flex-col">
+                  <div className="md:order-2 md:mt-20 text-black/90 italic text-sm mb-4">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
+                  <p className="md:order-1 text-[15px] leading-relaxed text-black/80 mb-8 whitespace-pre-line">{t(selectedPoi.infoKey)}</p>
+                  {nextPoi && (
+                    <button onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="md:order-3 md:mt-20 w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4">
+                      {t('seguir_para')} {t('ponto')} {nextPoi.id} 
+                    </button>
+                  )}
+                </div>
+              </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- VERSÃO MOBILE (EXATAMENTE O TEU ORIGINAL) ---
   return (
     <>
       <audio 
@@ -79,7 +133,7 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
         ref={sheetRef}
         isOpen={!!selectedPoi} 
         onClose={() => setSelectedPoi(null)}
-        snapPoints={dynamicSnapPoints}
+        snapPoints={[0.85, 0.15, 0]}
         initialSnap={1}
         onSnap={(index) => setSnapIndex(index)}
       >
@@ -100,7 +154,6 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
                 touchAction: snapIndex === 0 ? 'auto' : 'none' 
               }}
             >
-              {/* --- HEADER (Título e Player) --- */}
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 w-full mb-10">
                 <div className="md:flex-1">
                   <span className="border border-black text-[9px] px-2 py-0.5 rounded-full mb-2 inline-block font-bold uppercase tracking-wider">
@@ -128,35 +181,24 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
                       className="w-10 h-10 border border-black rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform shadow-xl"
                     >
                       {isPlaying ? (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                          <rect x="6" y="4" width="4" height="16" rx="1" />
-                          <rect x="14" y="4" width="4" height="16" rx="1" />
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
                       ) : (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="ml-1">
-                          <path d="M5 3l14 9-14 9V3z" />
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="ml-1"><path d="M5 3l14 9-14 9V3z" /></svg>
                       )}
                     </button>
                   </div>
                 </div>
               </div>
 
-              {/* --- CONTEÚDO (Imagem e Texto) --- */}
-              {/* md:flex-row coloca imagem ao lado do texto no PC */}
               <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
                 <img 
                   src={`${IMG_BASE_PATH}/${selectedPoi.img}`} 
                   className="w-full md:w-1/2 h-48 md:h-[60vh] object-cover rounded-[30px] shadow-lg" 
                   alt="" 
                 /> 
-                
                 <div className="w-full md:flex-1 flex flex-col">
                   <div className="md:order-2 md:mt-20 text-black/90 italic text-sm mb-4">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
-                  <p className="md:order-1 text-[15px] leading-relaxed text-black/80 mb-8 whitespace-pre-line">
-                    {t(selectedPoi.infoKey)}
-                  </p>
-                  
+                  <p className="md:order-1 text-[15px] leading-relaxed text-black/80 mb-8 whitespace-pre-line">{t(selectedPoi.infoKey)}</p>
                   {nextPoi && (
                     <button 
                       onClick={handleNextPoiNavigation}
@@ -167,12 +209,10 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
                   )}
                 </div>
               </div>
-
             </Sheet.Scroller>
           </Sheet.Content>
         </Sheet.Container>
       </Sheet>
-      
     </>
   );
 };
