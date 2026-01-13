@@ -56,7 +56,7 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
   if (isDesktop) {
     return (
       <div 
-        className="w-full bg-white/40 backdrop-blur-xl border-t border-white/40 px-8 md:px-16 py-20 relative z-[110] md:-mt-32 rounded-t-[50px]"
+        className="w-full bg-white/40 backdrop-blur-xl border-t border-white/40 px-8 md:px-16 py-10 relative z-[500] md:-mt-[12%] rounded-t-[50px]"
       >
         <audio 
           ref={audioRef} 
@@ -98,6 +98,7 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
                     </button>
                   </div>
                 </div>
+                
               </div>
 
               {/* CONTEÚDO (Imagem e Texto) */}
@@ -106,11 +107,21 @@ const PoiPanel = ({ selectedPoi, setSelectedPoi, nextPoi, setActiveRoute, active
                 <div className="w-full md:flex-1 flex flex-col">
                   <div className="md:order-2 md:mt-20 text-black/90 italic text-sm mb-4">{t('horario_label')}: {t(selectedPoi.horarioKey)}</div>
                   <p className="md:order-1 text-[15px] leading-relaxed text-black/80 mb-8 whitespace-pre-line">{t(selectedPoi.infoKey)}</p>
-                  {nextPoi && (
-                    <button onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="md:order-3 md:mt-20 w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4">
-                      {t('seguir_para')} {t('ponto')} {nextPoi.id} 
+                  <div className=" md:order-3 md:mt-16">
+                    {nextPoi && (
+                      <button onClick={() => { setSelectedPoi(nextPoi); setActiveRoute(true); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="md:order-3 md:mt-20 w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4">
+                        {t('seguir_para')} {t('ponto')} {nextPoi.id} 
+                      </button>
+                    )}
+                  
+                    <button 
+                      onClick={() => setSelectedPoi(null)} 
+                      className=" w-full py-4 bg-white text-black border border-black rounded-full font-bold text-xs shadow-xl mb-4"
+                      aria-label="Fechar painel"
+                    >
+                      {t('fechar')}
                     </button>
-                  )}
+                  </div>
                 </div>
               </div>
         </div>

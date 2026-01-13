@@ -65,10 +65,10 @@ const Footer = ({ t, sections }) => {
                                     <p>{t('morada_camara')}</p>
                                 </div>
                                 <div className="space-y-1">
-                                    <p>Telf.: <span className="underline underline-offset-4">{t('tel_1')}</span></p>
-                                    <p className="text-[12px]">(chamada para a rede fixa nacional)</p>
+                                    <p>{t('tel')} <span className="underline underline-offset-4">{t('tel_1')}</span></p>
+                                    <p className="text-[12px]">{t('tel_2')}</p>
                                 </div>
-                                <p>Email: <span className="underline underline-offset-4">{t('email_2')}</span></p>
+                                <p>{t('email_1')} <span className="underline underline-offset-4">{t('email_2')}</span></p>
 
                                 <div className="mt-20 md:flex space-x-6 mt-16">
                                     <img src='./assets/logos/insta.png' alt="Instagram" className='w-8 h-8 cursor-pointer' />
@@ -81,11 +81,11 @@ const Footer = ({ t, sections }) => {
 
                         <div className="w-1/2 space-y-6 text-[14px] pl-4">
                             <div className="space-y-1">
-                                <p>Atendimento:</p>
+                                <p>{t('atendimento_1')}</p>
                                 <p className="underline underline-offset-4">{t('atendimento_2')}</p>
                             </div>
                             <div className="space-y-1">
-                                <p>Encarregado de Proteção de Dados:</p>
+                                <p>{t('encarregado_1')}</p>
                                 <p className="underline underline-offset-4">{t('encarregado_2')}</p>
                             </div>
                         </div>

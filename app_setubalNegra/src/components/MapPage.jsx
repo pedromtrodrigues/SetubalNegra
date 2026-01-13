@@ -5,15 +5,15 @@ import PoiPanel from './PoiPanel';
 import Footer from './Footer';
 
 const monumentos = [
-  { id: 1, nomeKey: "poi_1_name", subKey: "poi_1_sub", infoKey: "poi_1_info", audioPath: "ponto_1", pos: { lat: 38.52345866090092, lng: -8.889270953156442 }, horarioKey: "horario_1", img: "image_1.jpg" },
-  { id: 2, nomeKey: "poi_2_name", subKey: "poi_2_sub", infoKey: "poi_2_info", audioPath: "ponto_2", pos: { lat: 38.52460000637646, lng: -8.88756996719753 }, horarioKey: "horario_2", img: "image_2.png" },
-  { id: 3, nomeKey: "poi_3_name", subKey: "poi_3_sub", infoKey: "poi_3_info", audioPath: "ponto_3", pos: { lat: 38.524650, lng: -8.887600 }, horarioKey: "horario_3", img: "image_3.png" },
-  { id: 4, nomeKey: "poi_4_name", subKey: "poi_4_sub", infoKey: "poi_4_info", audioPath: "ponto_4", pos: { lat: 38.52596911747808, lng: -8.894628824349434 }, horarioKey: "horario_4", img: "image_4.png" },
-  { id: 5, nomeKey: "poi_5_name", subKey: "poi_5_sub", infoKey: "poi_5_info", audioPath: "ponto_5", pos: { lat: 38.52245170505707, lng: -8.900317382629833 }, horarioKey: "horario_5", img: "image_5.png" },
-  { id: 6, nomeKey: "poi_6_name", subKey: "poi_6_sub", infoKey: "poi_6_info", audioPath: "ponto_6", pos: { lat: 38.524222912961214, lng: -8.892668681532145 }, horarioKey: "horario_6", img: "image_6.png" },
-  { id: 7, nomeKey: "poi_7_name", subKey: "poi_7_sub", infoKey: "poi_7_info", audioPath: "ponto_7", pos: { lat: 38.523596, lng: -8.891891 }, horarioKey: "horario_7", img: "image_7.png" },
-  { id: 8, nomeKey: "poi_8_name", subKey: "poi_8_sub", infoKey: "poi_8_info", audioPath: "ponto_8", pos: { lat: 38.5238, lng: -8.8935 }, horarioKey: "horario_8", img: "image_8.png" },
-  { id: 9, nomeKey: "poi_9_name", subKey: "poi_9_sub", infoKey: "poi_9_info", audioPath: "ponto_9", pos: { lat: 38.5241, lng: -8.8890 }, horarioKey: "horario_9", img: "image_1.jpg" }
+  { id: 1, nomeKey: "poi_1_name", subKey: "poi_1_sub", infoKey: "poi_1_info", audioPath: "ponto_1", pos: { lat: 38.52345866090092, lng: -8.889270953156442 }, horarioKey: "horario_1", img: "casa_alfandega.jpg" },
+  { id: 2, nomeKey: "poi_2_name", subKey: "poi_2_sub", infoKey: "poi_2_info", audioPath: "ponto_2", pos: { lat: 38.52460000637646, lng: -8.88756996719753 }, horarioKey: "horario_2", img: "igreja_santa.png" },
+  { id: 3, nomeKey: "poi_3_name", subKey: "poi_3_sub", infoKey: "poi_3_info", audioPath: "ponto_3", pos: { lat: 38.524650, lng: -8.887600 }, horarioKey: "horario_3", img: "casa_corpo.png" },
+  { id: 4, nomeKey: "poi_4_name", subKey: "poi_4_sub", infoKey: "poi_4_info", audioPath: "ponto_4", pos: { lat: 38.52596911747808, lng: -8.894628824349434 }, horarioKey: "horario_4", img: "convento_jesus.png" },
+  { id: 5, nomeKey: "poi_5_name", subKey: "poi_5_sub", infoKey: "poi_5_info", audioPath: "ponto_5", pos: { lat: 38.52245170505707, lng: -8.900317382629833 }, horarioKey: "horario_5", img: "anunciada.jpg" },
+  { id: 6, nomeKey: "poi_6_name", subKey: "poi_6_sub", infoKey: "poi_6_info", audioPath: "ponto_6", pos: { lat: 38.524222912961214, lng: -8.892668681532145 }, horarioKey: "horario_6", img: "praca_bocage.png" },
+  { id: 7, nomeKey: "poi_7_name", subKey: "poi_7_sub", infoKey: "poi_7_info", audioPath: "ponto_7", pos: { lat: 38.523596, lng: -8.891891 }, horarioKey: "horario_7", img: ".jpg" },
+  { id: 8, nomeKey: "poi_8_name", subKey: "poi_8_sub", infoKey: "poi_8_info", audioPath: "ponto_8", pos: { lat: 38.5238, lng: -8.8935 }, horarioKey: "horario_8", img: "galeria_banco.png" },
+  { id: 9, nomeKey: "poi_9_name", subKey: "poi_9_sub", infoKey: "poi_9_info", audioPath: "ponto_9", pos: { lat: 38.5241, lng: -8.8890 }, horarioKey: "horario_9", img: "musicos.jpg" }
 ];
 
 const Directions = ({ userLocation, destination, activeRoute }) => {
